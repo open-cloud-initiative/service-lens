@@ -1,26 +1,87 @@
 'use client'
 
 import { Plus } from 'lucide-react'
-import { siApple, siFigma, siOpenai, siPaypal, siVercel } from 'simple-icons'
+import { siApple, siFigma, siOpenaigym, siPaypal, siVercel } from 'simple-icons'
 
 import { SimpleIcon } from '@/components/simple-icon'
 import { Button } from '@/components/ui/button'
-import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+    Card,
+    CardAction,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { cn, formatCurrency } from '@/lib/utils'
 
 function ChipSVG() {
     return (
-        <svg enableBackground="new 0 0 132 92" viewBox="0 0 132 92" xmlns="http://www.w3.org/2000/svg" className="w-14">
+        <svg
+            enableBackground="new 0 0 132 92"
+            viewBox="0 0 132 92"
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-14"
+        >
             <title>Chip</title>
-            <rect x="0.5" y="0.5" width="131" height="91" rx="15" className="fill-accent stroke-accent" />
-            <rect x="9.5" y="9.5" width="48" height="21" rx="10.5" className="fill-accent stroke-accent-foreground" />
-            <rect x="9.5" y="61.5" width="48" height="21" rx="10.5" className="fill-accent stroke-accent-foreground" />
-            <rect x="9.5" y="35.5" width="48" height="21" rx="10.5" className="fill-accent stroke-accent-foreground" />
-            <rect x="74.5" y="9.5" width="48" height="21" rx="10.5" className="fill-accent stroke-accent-foreground" />
-            <rect x="74.5" y="61.5" width="48" height="21" rx="10.5" className="fill-accent stroke-accent-foreground" />
-            <rect x="74.5" y="35.5" width="48" height="21" rx="10.5" className="fill-accent stroke-accent-foreground" />
+            <rect
+                x="0.5"
+                y="0.5"
+                width="131"
+                height="91"
+                rx="15"
+                className="fill-accent stroke-accent"
+            />
+            <rect
+                x="9.5"
+                y="9.5"
+                width="48"
+                height="21"
+                rx="10.5"
+                className="fill-accent stroke-accent-foreground"
+            />
+            <rect
+                x="9.5"
+                y="61.5"
+                width="48"
+                height="21"
+                rx="10.5"
+                className="fill-accent stroke-accent-foreground"
+            />
+            <rect
+                x="9.5"
+                y="35.5"
+                width="48"
+                height="21"
+                rx="10.5"
+                className="fill-accent stroke-accent-foreground"
+            />
+            <rect
+                x="74.5"
+                y="9.5"
+                width="48"
+                height="21"
+                rx="10.5"
+                className="fill-accent stroke-accent-foreground"
+            />
+            <rect
+                x="74.5"
+                y="61.5"
+                width="48"
+                height="21"
+                rx="10.5"
+                className="fill-accent stroke-accent-foreground"
+            />
+            <rect
+                x="74.5"
+                y="35.5"
+                width="48"
+                height="21"
+                rx="10.5"
+                className="fill-accent stroke-accent-foreground"
+            />
         </svg>
     )
 }
@@ -37,7 +98,7 @@ const recentPayments = [
     },
     {
         id: 2,
-        icon: siOpenai,
+        icon: siOpenaigym,
         title: 'ChatGPT Subscription',
         subtitle: 'OpenAI monthly subscription',
         type: 'debit',
@@ -69,7 +130,10 @@ export function AccountOverview() {
         <Card className="shadow-xs">
             <CardHeader className="items-center">
                 <CardTitle>My Cards</CardTitle>
-                <CardDescription>Your card summary, balance, and recent transactions in one view.</CardDescription>
+                <CardDescription>
+                    Your card summary, balance, and recent transactions in one
+                    view.
+                </CardDescription>
                 <CardAction>
                     <Button size="icon" variant="outline">
                         <Plus className="size-4" />
@@ -88,7 +152,10 @@ export function AccountOverview() {
                         <div className="space-y-4">
                             <div className="perspective-distant relative aspect-8/5 w-full max-w-96 overflow-hidden rounded-xl bg-primary">
                                 <div className="absolute top-6 left-6">
-                                    <SimpleIcon icon={siApple} className="size-8 fill-primary-foreground" />
+                                    <SimpleIcon
+                                        icon={siApple}
+                                        className="size-8 fill-primary-foreground"
+                                    />
                                 </div>
                                 <div className="-translate-y-1/2 absolute top-1/2 w-full">
                                     <div className="flex items-end justify-between px-6">
@@ -102,35 +169,65 @@ export function AccountOverview() {
 
                             <div className="space-y-2 text-sm">
                                 <div className="flex items-center justify-between">
-                                    <span className="text-muted-foreground">Card Number</span>
-                                    <span className="font-medium tabular-nums">•••• •••• 5416</span>
+                                    <span className="text-muted-foreground">
+                                        Card Number
+                                    </span>
+                                    <span className="font-medium tabular-nums">
+                                        •••• •••• 5416
+                                    </span>
                                 </div>
                                 <div className="flex items-center justify-between">
-                                    <span className="text-muted-foreground">Expiry Date</span>
-                                    <span className="font-medium tabular-nums">06/09</span>
+                                    <span className="text-muted-foreground">
+                                        Expiry Date
+                                    </span>
+                                    <span className="font-medium tabular-nums">
+                                        06/09
+                                    </span>
                                 </div>
                                 <div className="flex items-center justify-between">
-                                    <span className="text-muted-foreground">CVC</span>
+                                    <span className="text-muted-foreground">
+                                        CVC
+                                    </span>
                                     <span className="font-medium">•••</span>
                                 </div>
                                 <div className="flex items-center justify-between">
-                                    <span className="text-muted-foreground">Spending Limit</span>
-                                    <span className="font-medium tabular-nums">$62,000.00</span>
+                                    <span className="text-muted-foreground">
+                                        Spending Limit
+                                    </span>
+                                    <span className="font-medium tabular-nums">
+                                        $62,000.00
+                                    </span>
                                 </div>
                                 <div className="flex items-center justify-between">
-                                    <span className="text-muted-foreground">Available Balance</span>
-                                    <span className="font-medium tabular-nums">$13,100.06</span>
+                                    <span className="text-muted-foreground">
+                                        Available Balance
+                                    </span>
+                                    <span className="font-medium tabular-nums">
+                                        $13,100.06
+                                    </span>
                                 </div>
                             </div>
 
                             <div className="flex gap-2">
-                                <Button className="flex-1" variant="outline" size="sm">
+                                <Button
+                                    className="flex-1"
+                                    variant="outline"
+                                    size="sm"
+                                >
                                     Freeze Card
                                 </Button>
-                                <Button className="flex-1" variant="outline" size="sm">
+                                <Button
+                                    className="flex-1"
+                                    variant="outline"
+                                    size="sm"
+                                >
                                     Set Limit
                                 </Button>
-                                <Button className="flex-1" variant="outline" size="sm">
+                                <Button
+                                    className="flex-1"
+                                    variant="outline"
+                                    size="sm"
+                                >
                                     More
                                 </Button>
                             </div>
@@ -138,17 +235,27 @@ export function AccountOverview() {
                             <Separator />
 
                             <div className="space-y-4">
-                                <h6 className="text-muted-foreground text-sm uppercase">Recent Payments</h6>
+                                <h6 className="text-muted-foreground text-sm uppercase">
+                                    Recent Payments
+                                </h6>
 
                                 <div className="space-y-4">
                                     {recentPayments.map((transaction) => (
-                                        <div key={transaction.id} className="flex items-center gap-2">
+                                        <div
+                                            key={transaction.id}
+                                            className="flex items-center gap-2"
+                                        >
                                             <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-muted">
-                                                <SimpleIcon icon={transaction.icon} className="size-5" />
+                                                <SimpleIcon
+                                                    icon={transaction.icon}
+                                                    className="size-5"
+                                                />
                                             </div>
                                             <div className="flex w-full items-end justify-between">
                                                 <div>
-                                                    <p className="font-medium text-sm">{transaction.title}</p>
+                                                    <p className="font-medium text-sm">
+                                                        {transaction.title}
+                                                    </p>
                                                     <p className="line-clamp-1 text-muted-foreground text-xs">
                                                         {transaction.subtitle}
                                                     </p>
@@ -157,12 +264,16 @@ export function AccountOverview() {
                                                     <span
                                                         className={cn(
                                                             'font-medium text-sm tabular-nums leading-none',
-                                                            transaction.type === 'debit'
+                                                            transaction.type ===
+                                                                'debit'
                                                                 ? 'text-destructive'
-                                                                : 'text-green-500',
+                                                                : 'text-green-500'
                                                         )}
                                                     >
-                                                        {formatCurrency(transaction.amount, { noDecimals: true })}
+                                                        {formatCurrency(
+                                                            transaction.amount,
+                                                            { noDecimals: true }
+                                                        )}
                                                     </span>
                                                 </div>
                                             </div>
@@ -170,13 +281,19 @@ export function AccountOverview() {
                                     ))}
                                 </div>
 
-                                <Button className="w-full" size="sm" variant="outline">
+                                <Button
+                                    className="w-full"
+                                    size="sm"
+                                    variant="outline"
+                                >
                                     View All Payments
                                 </Button>
                             </div>
                         </div>
                     </TabsContent>
-                    <TabsContent value="physical">Physical card details are currently unavailable</TabsContent>
+                    <TabsContent value="physical">
+                        Physical card details are currently unavailable
+                    </TabsContent>
                 </Tabs>
             </CardContent>
         </Card>

@@ -1,18 +1,24 @@
 // Proxy disabled.
 // Rename this file to `proxy.ts` to enable it.
-import { type NextRequest, NextResponse } from 'next/server'
+import { auth } from '@/lib/auth'
+import { headers } from 'next/headers'
+import { NextRequest, NextResponse } from 'next/server'
 
 /**
  * Runs before requests complete.
  * Use for rewrites, redirects, or header changes.
  * Refer to Next.js Proxy docs for more examples.
  */
-export function proxy(_req: NextRequest) {
-    // Example: redirect to dashboard if user is logged in
-    // const token = req.cookies.get("session_token")?.value;
-    // if (token && req.nextUrl.pathname === "/auth/login")
-    //   return NextResponse.redirect(new URL("/dashboard", req.url));
-
+export async function proxy(request: NextRequest) {
+    const session = await auth.api.getSession({
+        headers: await headers(),
+    })
+    // THIS IS NOT SECURE!
+    // This is the recommended approach to optimistically redirect users
+    // We recommend handling auth checks in each page/route
+    if (!session) {
+        return NextResponse.redirect(new URL('/sign-in', request.url))
+    }
     return NextResponse.next()
 }
 
