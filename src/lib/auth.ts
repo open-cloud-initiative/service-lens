@@ -3,7 +3,11 @@ import { organization } from 'better-auth/plugins'
 import { Pool } from 'pg'
 
 export const auth = betterAuth({
-    plugins: [organization()],
+    plugins: [
+        organization({
+            teams: { enabled: true },
+        }),
+    ],
     baseURL: process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000',
     emailAndPassword: {
         enabled: true,
