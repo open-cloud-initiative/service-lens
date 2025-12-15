@@ -1,8 +1,10 @@
 'use client'
 
-import { useState } from 'react'
-
+import { signOut } from '@/lib/auth-client'
 import { BadgeCheck, Bell, CreditCard, LogOut } from 'lucide-react'
+import { redirect } from 'next/navigation'
+import { useState } from 'react'
+import { toast } from 'sonner'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
@@ -27,6 +29,20 @@ export function AccountSwitcher({
     }>
 }) {
     const [activeUser, setActiveUser] = useState(users[0])
+
+    const onClick = async () => {
+        await signOut({
+            fetchOptions: {
+                onError: (ctx) => {
+                    toast.error(ctx.error.message)
+                },
+                onSuccess: async () => {
+                    toast.success('Successfully logged out')
+                    redirect('/')
+                },
+            },
+        })
+    }
 
     return (
         <DropdownMenu>
@@ -94,7 +110,7 @@ export function AccountSwitcher({
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={onClick}>
                     <LogOut />
                     Log out
                 </DropdownMenuItem>

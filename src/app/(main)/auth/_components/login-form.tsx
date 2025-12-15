@@ -2,6 +2,7 @@
 
 import { signIn } from '@/lib/auth-client'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { redirect } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -36,23 +37,21 @@ export function LoginForm() {
         },
     })
 
-    const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-        const { error } = await signIn.email({
+    const onSubmit = async (data: z.infer<typeof FormSchema>) =>
+        await signIn.email({
             email: data.email, // required
             password: data.password, // required
             rememberMe: data.remember,
+            fetchOptions: {
+                onError: (ctx) => {
+                    toast.error(ctx.error.message)
+                },
+                onSuccess: async () => {
+                    toast.success('Successfully logged in')
+                    redirect('/')
+                },
+            },
         })
-
-        toast('You submitted the following values', {
-            description: (
-                <pre className="mt-2 w-[320px] rounded-md bg-neutral-950 p-4">
-                    <code className="text-white">
-                        {JSON.stringify(data, null, 2)}
-                    </code>
-                </pre>
-            ),
-        })
-    }
 
     return (
         <Form {...form}>
@@ -117,7 +116,11 @@ export function LoginForm() {
                         </FormItem>
                     )}
                 />
-                <Button className="w-full" type="submit">
+                <Button
+                    className="w-full"
+                    type="submit"
+                    disabled={form.formState.isSubmitting}
+                >
                     Login
                 </Button>
             </form>

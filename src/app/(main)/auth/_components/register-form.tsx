@@ -16,9 +16,13 @@ import {
     FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { redirect } from 'next/navigation'
 
 const FormSchema = z
     .object({
+        name: z
+            .string()
+            .min(2, { message: 'Name must be at least 2 characters.' }),
         email: z
             .string()
             .email({ message: 'Please enter a valid email address.' }),
@@ -38,15 +42,16 @@ export function RegisterForm() {
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
+            name: '',
             email: '',
             password: '',
             confirmPassword: '',
         },
     })
 
-    const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-        const { error } = await signUp.email({
-            name: 'Demo', // required
+    const onSubmit = async (data: z.infer<typeof FormSchema>) =>
+        await signUp.email({
+            name: data.name, // required
             email: data.email, // required
             password: data.password, // required
             callbackURL: '/',
@@ -56,24 +61,32 @@ export function RegisterForm() {
                 },
                 onSuccess: async () => {
                     toast.success('Successfully signed up')
+                    redirect('/')
                 },
             },
         })
 
-        toast('You submitted the following values', {
-            description: (
-                <pre className="mt-2 w-[320px] rounded-md bg-neutral-950 p-4">
-                    <code className="text-white">
-                        {JSON.stringify(error, null, 2)}
-                    </code>
-                </pre>
-            ),
-        })
-    }
-
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Your Name</FormLabel>
+                            <FormControl>
+                                <Input
+                                    id="name"
+                                    type="text"
+                                    placeholder="Indy Jones"
+                                    {...field}
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
                 <FormField
                     control={form.control}
                     name="email"
@@ -131,7 +144,11 @@ export function RegisterForm() {
                         </FormItem>
                     )}
                 />
-                <Button className="w-full" type="submit">
+                <Button
+                    className="w-full"
+                    type="submit"
+                    disabled={form.formState.isSubmitting}
+                >
                     Register
                 </Button>
             </form>
