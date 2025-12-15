@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { useSession } from '@/lib/auth-client'
 import { cn, formatCurrency } from '@/lib/utils'
 
 function ChipSVG() {
@@ -126,6 +127,8 @@ const recentPayments = [
 ]
 
 export function AccountOverview() {
+    const session = useSession()
+
     return (
         <Card className="shadow-xs">
             <CardHeader className="items-center">
