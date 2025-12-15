@@ -1,0 +1,25 @@
+services:
+  postgres:
+    image: postgres:14
+    container_name: postgres
+    networks:
+      - service-lens
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=default
+    volumes:
+      - pg:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+networks:
+  service-lens:
+
+volumes:
+  pg: {}
