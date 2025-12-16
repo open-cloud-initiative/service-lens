@@ -1,5 +1,3 @@
-export default async function Page({
-    children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default async function Page({ children }: Readonly<{ children: React.ReactNode }>) {
     return <>Start</>
 }

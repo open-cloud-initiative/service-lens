@@ -1,23 +1,9 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from '@/components/ui/form'
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { useForm } from 'react-hook-form'
 // import { showSubmittedData } from '@/lib/show-submitted-data'
@@ -41,7 +27,7 @@ const profileFormSchema = z.object({
         .array(
             z.object({
                 value: z.string().url('Please enter a valid URL.'),
-            })
+            }),
         )
         .optional(),
 })
@@ -51,10 +37,7 @@ type ProfileFormValues = z.infer<typeof profileFormSchema>
 // This can come from your database or API.
 const defaultValues: Partial<ProfileFormValues> = {
     bio: 'I own a computer.',
-    urls: [
-        { value: 'https://shadcn.com' },
-        { value: 'http://twitter.com/shadcn' },
-    ],
+    urls: [{ value: 'https://shadcn.com' }, { value: 'http://twitter.com/shadcn' }],
 }
 
 export function ProfileForm() {
@@ -85,9 +68,8 @@ export function ProfileForm() {
                                 <Input placeholder="shadcn" {...field} />
                             </FormControl>
                             <FormDescription>
-                                This is your public display name. It can be your
-                                real name or a pseudonym. You can only change
-                                this once every 30 days.
+                                This is your public display name. It can be your real name or a pseudonym. You can only
+                                change this once every 30 days.
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
@@ -99,30 +81,20 @@ export function ProfileForm() {
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Email</FormLabel>
-                            <Select
-                                onValueChange={field.onChange}
-                                defaultValue={field.value}
-                            >
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
                                 <FormControl>
                                     <SelectTrigger>
                                         <SelectValue placeholder="Select a verified email to display" />
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                    <SelectItem value="m@example.com">
-                                        m@example.com
-                                    </SelectItem>
-                                    <SelectItem value="m@google.com">
-                                        m@google.com
-                                    </SelectItem>
-                                    <SelectItem value="m@support.com">
-                                        m@support.com
-                                    </SelectItem>
+                                    <SelectItem value="m@example.com">m@example.com</SelectItem>
+                                    <SelectItem value="m@google.com">m@google.com</SelectItem>
+                                    <SelectItem value="m@support.com">m@support.com</SelectItem>
                                 </SelectContent>
                             </Select>
                             <FormDescription>
-                                You can manage verified email addresses in your{' '}
-                                <Link href="/">email settings</Link>.
+                                You can manage verified email addresses in your <Link href="/">email settings</Link>.
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
@@ -142,8 +114,7 @@ export function ProfileForm() {
                                 />
                             </FormControl>
                             <FormDescription>
-                                You can <span>@mention</span> other users and
-                                organizations to link to them.
+                                You can <span>@mention</span> other users and organizations to link to them.
                             </FormDescription>
                             <FormMessage />
                         </FormItem>

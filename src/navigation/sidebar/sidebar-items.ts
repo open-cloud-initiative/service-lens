@@ -4,8 +4,6 @@ import {
     ChartBar,
     Fingerprint,
     Forklift,
-    Gauge,
-    GraduationCap,
     Kanban,
     LayoutDashboard,
     Lock,
@@ -14,7 +12,6 @@ import {
     MessageSquare,
     ReceiptText,
     Settings,
-    ShoppingBag,
     Users,
 } from 'lucide-react'
 
@@ -62,24 +59,6 @@ export const sidebarItems: NavGroup[] = [
                 title: 'Finance',
                 url: '/dashboard/finance',
                 icon: Banknote,
-            },
-            {
-                title: 'Analytics',
-                url: '/dashboard/coming-soon',
-                icon: Gauge,
-                comingSoon: true,
-            },
-            {
-                title: 'E-commerce',
-                url: '/dashboard/coming-soon',
-                icon: ShoppingBag,
-                comingSoon: true,
-            },
-            {
-                title: 'Academy',
-                url: '/dashboard/coming-soon',
-                icon: GraduationCap,
-                comingSoon: true,
             },
             {
                 title: 'Logistics',
