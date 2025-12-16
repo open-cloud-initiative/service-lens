@@ -13,8 +13,8 @@ import {
     Mail,
     MessageSquare,
     ReceiptText,
+    Settings,
     ShoppingBag,
-    SquareArrowUpRight,
     Users,
 } from 'lucide-react'
 
@@ -161,10 +161,9 @@ export const sidebarItems: NavGroup[] = [
         label: 'Misc',
         items: [
             {
-                title: 'Others',
-                url: '/dashboard/coming-soon',
-                icon: SquareArrowUpRight,
-                comingSoon: true,
+                title: 'Settings',
+                url: '/settings/profile',
+                icon: Settings,
             },
         ],
     },
