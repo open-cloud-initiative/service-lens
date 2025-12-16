@@ -1,3 +1,4 @@
+import { RootLayout } from '@/components/layout/root'
 import { Separator } from '@/components/ui/separator'
 import { Bell, Monitor, Palette, UserCog, Wrench } from 'lucide-react'
 import { SidebarNav } from './_components/sidebar-nav'
@@ -34,7 +35,7 @@ export default function Layout({
     children,
 }: Readonly<{ children: React.ReactNode }>) {
     return (
-        <>
+        <RootLayout>
             <div className="space-y-0.5">
                 <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
                     Settings
@@ -52,6 +53,6 @@ export default function Layout({
                     {children}
                 </div>
             </div>
-        </>
+        </RootLayout>
     )
 }
