@@ -3,19 +3,9 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-import { ChevronRight, PlusCircleIcon } from 'lucide-react'
-
-import {
-    Collapsible,
-    CollapsibleContent,
-    CollapsibleTrigger,
-} from '@/components/ui/collapsible'
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+import { QuickCreateDialog } from '@/components/quick-create-dialog'
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import {
     SidebarGroup,
     SidebarGroupContent,
@@ -29,15 +19,14 @@ import {
     useSidebar,
 } from '@/components/ui/sidebar'
 import type { NavGroup, NavMainItem } from '@/navigation/sidebar/sidebar-items'
+import { ChevronRight } from 'lucide-react'
 
 interface NavMainProps {
     readonly items: readonly NavGroup[]
 }
 
 const IsComingSoon = () => (
-    <span className="ml-auto rounded-md bg-gray-200 px-2 py-1 text-xs dark:text-gray-800">
-        Soon
-    </span>
+    <span className="ml-auto rounded-md bg-gray-200 px-2 py-1 text-xs dark:text-gray-800">Soon</span>
 )
 
 const NavItemExpanded = ({
@@ -50,12 +39,7 @@ const NavItemExpanded = ({
     isSubmenuOpen: (subItems?: NavMainItem['subItems']) => boolean
 }) => {
     return (
-        <Collapsible
-            key={item.title}
-            asChild
-            defaultOpen={isSubmenuOpen(item.subItems)}
-            className="group/collapsible"
-        >
+        <Collapsible key={item.title} asChild defaultOpen={isSubmenuOpen(item.subItems)} className="group/collapsible">
             <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
                     {item.subItems ? (
@@ -76,11 +60,7 @@ const NavItemExpanded = ({
                             isActive={isActive(item.url)}
                             tooltip={item.title}
                         >
-                            <Link
-                                prefetch={false}
-                                href={item.url}
-                                target={item.newTab ? '_blank' : undefined}
-                            >
+                            <Link prefetch={false} href={item.url} target={item.newTab ? '_blank' : undefined}>
                                 {item.icon && <item.icon />}
                                 <span>{item.title}</span>
                                 {item.comingSoon && <IsComingSoon />}
@@ -101,17 +81,11 @@ const NavItemExpanded = ({
                                         <Link
                                             prefetch={false}
                                             href={subItem.url}
-                                            target={
-                                                subItem.newTab
-                                                    ? '_blank'
-                                                    : undefined
-                                            }
+                                            target={subItem.newTab ? '_blank' : undefined}
                                         >
                                             {subItem.icon && <subItem.icon />}
                                             <span>{subItem.title}</span>
-                                            {subItem.comingSoon && (
-                                                <IsComingSoon />
-                                            )}
+                                            {subItem.comingSoon && <IsComingSoon />}
                                         </Link>
                                     </SidebarMenuSubButton>
                                 </SidebarMenuSubItem>
@@ -145,11 +119,7 @@ const NavItemCollapsed = ({
                         <ChevronRight />
                     </SidebarMenuButton>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent
-                    className="w-50 space-y-1"
-                    side="right"
-                    align="start"
-                >
+                <DropdownMenuContent className="w-50 space-y-1" side="right" align="start">
                     {item.subItems?.map((subItem) => (
                         <DropdownMenuItem key={subItem.title} asChild>
                             <SidebarMenuSubButton
@@ -162,13 +132,9 @@ const NavItemCollapsed = ({
                                 <Link
                                     prefetch={false}
                                     href={subItem.url}
-                                    target={
-                                        subItem.newTab ? '_blank' : undefined
-                                    }
+                                    target={subItem.newTab ? '_blank' : undefined}
                                 >
-                                    {subItem.icon && (
-                                        <subItem.icon className="[&>svg]:text-sidebar-foreground" />
-                                    )}
+                                    {subItem.icon && <subItem.icon className="[&>svg]:text-sidebar-foreground" />}
                                     <span>{subItem.title}</span>
                                     {subItem.comingSoon && <IsComingSoon />}
                                 </Link>
@@ -202,22 +168,14 @@ export function NavMain({ items }: NavMainProps) {
                 <SidebarGroupContent className="flex flex-col gap-2">
                     <SidebarMenu>
                         <SidebarMenuItem className="flex items-center gap-2">
-                            <SidebarMenuButton
-                                tooltip="Quick Create"
-                                className="min-w-8 bg-primary text-primary-foreground duration-200 ease-linear hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground"
-                            >
-                                <PlusCircleIcon />
-                                <span>Quick Create</span>
-                            </SidebarMenuButton>
+                            <QuickCreateDialog />
                         </SidebarMenuItem>
                     </SidebarMenu>
                 </SidebarGroupContent>
             </SidebarGroup>
             {items.map((group) => (
                 <SidebarGroup key={group.id}>
-                    {group.label && (
-                        <SidebarGroupLabel>{group.label}</SidebarGroupLabel>
-                    )}
+                    {group.label && <SidebarGroupLabel>{group.label}</SidebarGroupLabel>}
                     <SidebarGroupContent className="flex flex-col gap-2">
                         <SidebarMenu>
                             {group.items.map((item) => {
@@ -228,42 +186,24 @@ export function NavMain({ items }: NavMainProps) {
                                             <SidebarMenuItem key={item.title}>
                                                 <SidebarMenuButton
                                                     asChild
-                                                    aria-disabled={
-                                                        item.comingSoon
-                                                    }
+                                                    aria-disabled={item.comingSoon}
                                                     tooltip={item.title}
-                                                    isActive={isItemActive(
-                                                        item.url
-                                                    )}
+                                                    isActive={isItemActive(item.url)}
                                                 >
                                                     <Link
                                                         prefetch={false}
                                                         href={item.url}
-                                                        target={
-                                                            item.newTab
-                                                                ? '_blank'
-                                                                : undefined
-                                                        }
+                                                        target={item.newTab ? '_blank' : undefined}
                                                     >
-                                                        {item.icon && (
-                                                            <item.icon />
-                                                        )}
-                                                        <span>
-                                                            {item.title}
-                                                        </span>
+                                                        {item.icon && <item.icon />}
+                                                        <span>{item.title}</span>
                                                     </Link>
                                                 </SidebarMenuButton>
                                             </SidebarMenuItem>
                                         )
                                     }
                                     // Otherwise, render the dropdown as before
-                                    return (
-                                        <NavItemCollapsed
-                                            key={item.title}
-                                            item={item}
-                                            isActive={isItemActive}
-                                        />
-                                    )
+                                    return <NavItemCollapsed key={item.title} item={item} isActive={isItemActive} />
                                 }
                                 // Expanded view
                                 return (
