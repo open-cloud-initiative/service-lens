@@ -9,38 +9,39 @@ This JSON schema defines the structure for evaluating a system against best prac
 ### Schema Structure
 
 #### Root Object
-- **version**: (integer) The version of the schema.
-- **name**: (string) The name of the lens.
-- **description**: (string) A description of the lens.
-- **pillars**: (array) A list of pillars.
+
+- ```version```: (integer) The version of the schema.
+- ```name```: (string) The name of the lens.
+- ```description```: (string) A description of the lens.
+- ```pillars```: (array) A list of pillars.
 
 #### Pillar Object
-- **ref**: (string) A reference identifier for the pillar.
-- **name**: (string) The name of the pillar.
-- **description**: (string) A description of the pillar.
-- **questions**: (array) A list of questions related to the pillar.
-- **resources**: (array) A list of resources related to the pillar.
+- ```ref```: (string) A reference identifier for the pillar.
+- ```name```: (string) The name of the pillar.
+- ```description```: (string) A description of the pillar.
+- ```questions```: (array) A list of questions related to the pillar.
+- ```resources```: (array) A list of resources related to the pillar.
 
 #### Question Object
-- **ref**: (string) A reference identifier for the question.
-- **title**: (string) The title of the question.
-- **description**: (string) A description of the question.
-- **resources**: (array) A list of resources related to the question.
-- **choices**: (array) A list of choices for the question.
-- **risks**: (array) A list of risks associated with the question.
+- ```ref```: (string) A reference identifier for the question.
+- ```title```: (string) The title of the question.
+- ```description```: (string) A description of the question.
+- ```resources```: (array) A list of resources related to the question.
+- ```choices```: (array) A list of choices for the question.
+- ```risks```: (array) A list of risks associated with the question.
 
 #### Resource Object
-- **url**: (string) The URL of the resource.
-- **description**: (string) A description of the resource.
+- ```url```: (string) The URL of the resource.
+- ```description```: (string) A description of the resource.
 
 #### Choice Object
-- **ref**: (string) A reference identifier for the choice.
-- **title**: (string) The title of the choice.
-- **description**: (string) A description of the choice.
+- ```ref```: (string) A reference identifier for the choice.
+- ```title```: (string) The title of the choice.
+- ```description```: (string) A description of the choice.
 
 #### Risk Object
-- **risk**: (string) The risk level.
-- **condition**: (string) The condition under which the risk applies.
+- ```risk```: (string) The risk level.
+- ```condition```: (string) The condition under which the risk applies.
 
 #### Example
 
