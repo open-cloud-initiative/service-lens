@@ -5,14 +5,15 @@ import { cookies } from 'next/headers'
 import { AppSidebar } from '@/app/(main)/dashboard/_components/sidebar/app-sidebar'
 import { Separator } from '@/components/ui/separator'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
-import { users } from '@/data/users'
+import { auth } from '@/lib/auth'
 import { SIDEBAR_COLLAPSIBLE_VALUES, SIDEBAR_VARIANT_VALUES } from '@/lib/preferences/layout'
 import { cn } from '@/lib/utils'
 import { getPreference } from '@/server/server-actions'
+import { headers } from "next/headers"
 
-import { AccountSwitcher } from './sidebar/account-switcher'
 import { LayoutControls } from './sidebar/layout-controls'
 import { SearchDialog } from './sidebar/search-dialog'
+import { TeamSwitcher } from './sidebar/team-switcher'
 import { ThemeSwitcher } from './sidebar/theme-switcher'
 
 export async function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
@@ -22,6 +23,10 @@ export async function RootLayout({ children }: Readonly<{ children: ReactNode }>
         getPreference('sidebar_variant', SIDEBAR_VARIANT_VALUES, 'inset'),
         getPreference('sidebar_collapsible', SIDEBAR_COLLAPSIBLE_VALUES, 'icon'),
     ])
+
+    const session = await auth.api.getSession({
+        headers: await headers()
+    })
 
     return (
         <SidebarProvider defaultOpen={defaultOpen}>
@@ -50,7 +55,7 @@ export async function RootLayout({ children }: Readonly<{ children: ReactNode }>
                         <div className="flex items-center gap-2">
                             <LayoutControls />
                             <ThemeSwitcher />
-                            <AccountSwitcher users={users} />
+                            <TeamSwitcher user={session?.user} />
                         </div>
                     </div>
                 </header>

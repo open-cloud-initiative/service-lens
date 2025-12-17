@@ -12,7 +12,7 @@
     "check:fix": "biome check --write",
     "generate:presets": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' src/scripts/generate-theme-presets.ts",
     "postinstall": "npm run setup:migrate",
-    "setup:migrate": "npx @better-auth/cli migrate -y"
+    "setup:migrate": "npx -y @better-auth/cli migrate -y"
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": [
