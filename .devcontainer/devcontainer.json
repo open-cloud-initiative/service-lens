@@ -15,10 +15,19 @@
     "ghcr.io/devcontainers/features/github-cli:1": {},
     "ghcr.io/devcontainers/features/git-lfs:1": {}
   },
+  "hostRequirements": {
+    "cpus": 8,
+    "memory": "16gb",
+    "storage": "32gb"
+  },
   "customizations": {
     "vscode": {
       "extensions": [
-        "ms-ossdata.vscode-pgsql"
+        "ms-ossdata.vscode-pgsql",
+        "dbaeumer.vscode-eslint",
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+        "eamodio.gitlens"
       ]
     }
   }
