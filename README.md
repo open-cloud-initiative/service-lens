@@ -128,3 +128,15 @@ npm i
 ```bash
 openssl rand -base64 32
 ```
+
+## Development
+
+Generate database migrations.
+
+```bash
+npm run sequelize -- migration:generate --name <name-of-migration>
+```
+
+## License
+
+[MIT](/LICENSE)
