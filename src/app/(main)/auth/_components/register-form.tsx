@@ -1,3 +1,5 @@
+"use client"
+
 import { signUp } from '@/lib/auth-client'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'

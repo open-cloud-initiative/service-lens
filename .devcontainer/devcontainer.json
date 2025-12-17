@@ -18,6 +18,7 @@
   "customizations": {
     "vscode": {
       "extensions": [
+        "ms-ossdata.vscode-pgsql"
       ]
     }
   }
