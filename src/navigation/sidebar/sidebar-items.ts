@@ -54,7 +54,7 @@ export const sidebarItems: NavGroup[] = [
             },
             {
                 title: 'Templates',
-                url: '/templates',
+                url: '/template',
                 icon: BookDashed,
             },
         ],
