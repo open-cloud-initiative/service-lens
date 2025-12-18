@@ -48,7 +48,7 @@ export const sidebarItems: NavGroup[] = [
                 icon: LayoutDashboard,
             },
             {
-                title: 'Solutions',
+                title: 'Designs',
                 url: '/designs',
                 icon: PencilRuler,
             },

@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { GraphQLResolveInfo } from 'graphql';
 import { GraphQLCodegenTypescriptTypeDefsDocumentNode } from 'graphql-codegen-typescript-typedefs'
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = T | null | undefined;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -29,6 +30,13 @@ export type Query = {
   designs?: Maybe<Array<Maybe<Design>>>;
 };
 
+export type QueryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type QueryQuery = { __typename?: 'Query', designs?: Array<{ __typename?: 'Design', id: number, title: string, body: string } | null> | null };
+
+
+export const QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Query"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"designs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"body"}}]}}]}}]} as unknown as DocumentNode<QueryQuery, QueryQueryVariables>;
 
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
