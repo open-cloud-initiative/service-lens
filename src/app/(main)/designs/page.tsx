@@ -1,16 +1,10 @@
-import { fetchDesigns } from '@/hooks/use-designs'
+import { DataTable } from './_components/data-table'
+import data from './_components/data.json'
 
-export default async function Page({ children }: Readonly<{ children: React.ReactNode }>) {
-    const { designs } = await fetchDesigns()
-
+export default function Page() {
     return (
-        <ul>
-            {designs?.map((design) => (
-                <li key={design?.id}>
-                    <h2>{design?.title}</h2>
-                    <p>{design?.body}</p>
-                </li>
-            ))}
-        </ul>
+        <div className="@container/main flex flex-col gap-4 md:gap-6">
+            <DataTable data={data} />
+        </div>
     )
 }
