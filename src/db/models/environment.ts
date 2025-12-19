@@ -1,23 +1,22 @@
 import {
-  AutoIncrement,
-  Column,
-  CreatedAt,
-  DataType,
-  DeletedAt,
-  Max,
-  Min,
-  Model,
-  NotEmpty,
-  PrimaryKey,
-  Table,
-  UpdatedAt,
+    AutoIncrement,
+    Column,
+    CreatedAt,
+    DataType,
+    DeletedAt,
+    Max,
+    Min,
+    Model,
+    NotEmpty,
+    PrimaryKey,
+    Table,
+    UpdatedAt,
 } from 'sequelize-typescript'
 
 export interface EnvironmentAttributes {
     id: bigint
     name: string
     description: string
-    label: string
     createdAt: Date
     updatedAt: Date
     deletedAt: Date
@@ -40,16 +39,6 @@ export class Environment extends Model<EnvironmentAttributes, EnvironmentCreatio
     @Max(256)
     @Column
     name!: string
-
-    @NotEmpty
-    @Min(3)
-    @Max(256)
-    @Column
-    label!: string
-
-    @NotEmpty
-    @Column
-    labelColor!: string
 
     @NotEmpty
     @Min(12)

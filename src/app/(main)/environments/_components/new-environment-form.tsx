@@ -1,61 +1,36 @@
 'use client'
 
-import { signUp } from '@/lib/auth-client'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { redirect } from 'next/navigation'
+import { createEnvironmentAction } from './new-environment-form.action'
 
-const FormSchema = z
-    .object({
-        name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
-        email: z.string().email({ message: 'Please enter a valid email address.' }),
-        password: z.string().min(6, { message: 'Password must be at least 6 characters.' }),
-        confirmPassword: z.string().min(6, {
-            message: 'Confirm Password must be at least 6 characters.',
-        }),
-    })
-    .refine((data) => data.password === data.confirmPassword, {
-        message: 'Passwords do not match.',
-        path: ['confirmPassword'],
-    })
+const FormSchema = z.object({
+    name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
+    description: z.string().min(2, { message: 'Description must be at least 2 characters.' }),
+})
+
+const initialState = {
+    name: '',
+    description: '',
+}
 
 export function NewEnvironmentForm() {
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
             name: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
+            description: '',
         },
     })
 
-    const onSubmit = async (data: z.infer<typeof FormSchema>) =>
-        await signUp.email({
-            name: data.name, // required
-            email: data.email, // required
-            password: data.password, // required
-            callbackURL: '/',
-            fetchOptions: {
-                onError: (ctx) => {
-                    toast.error(ctx.error.message)
-                },
-                onSuccess: async () => {
-                    toast.success('Successfully signed up')
-                    redirect('/')
-                },
-            },
-        })
-
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <form action={createEnvironmentAction} className="space-y-4">
                 <FormField
                     control={form.control}
                     name="name"
@@ -71,18 +46,12 @@ export function NewEnvironmentForm() {
                 />
                 <FormField
                     control={form.control}
-                    name="email"
+                    name="description"
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Description</FormLabel>
                             <FormControl>
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    placeholder="you@example.com"
-                                    autoComplete="email"
-                                    {...field}
-                                />
+                                <Input id="description" type="text" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
