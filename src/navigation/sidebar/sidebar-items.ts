@@ -79,7 +79,7 @@ export const sidebarItems: NavGroup[] = [
                 title: 'Environments',
                 url: '/environments',
                 icon: AirVent,
-                comingSoon: true,
+                comingSoon: false,
             },
             {
                 title: 'Profiles',
