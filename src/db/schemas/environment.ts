@@ -1,4 +1,5 @@
 import { integer, pgTable, timestamp, varchar } from 'drizzle-orm/pg-core'
+import { createInsertSchema } from 'drizzle-zod'
 
 export const environmentTable = pgTable('environment', {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -10,3 +11,5 @@ export const environmentTable = pgTable('environment', {
         .$onUpdate(() => new Date()),
     deletedAt: timestamp('deleted_at'),
 })
+
+export const environmentInsertSchema = createInsertSchema(environmentTable)
