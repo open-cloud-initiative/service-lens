@@ -9,6 +9,7 @@ import {
     PencilRuler,
     Settings,
     UserCog,
+    Users,
     Wrench,
 } from 'lucide-react'
 
@@ -111,6 +112,22 @@ export const sidebarItems: NavGroup[] = [
                         newTab: false,
                     },
                 ],
+            },
+        ],
+    },
+    {
+        id: 4,
+        label: 'Admin',
+        items: [
+            {
+                title: 'Users',
+                url: '/admin/users',
+                icon: Users,
+            },
+            {
+                title: 'Settings',
+                url: '/admin/settings',
+                icon: Settings,
             },
         ],
     },
