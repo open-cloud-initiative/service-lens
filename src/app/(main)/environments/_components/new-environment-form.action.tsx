@@ -2,25 +2,22 @@
 
 import { createEnvironment } from '@/db/actions/environment'
 import 'server-only'
+import { z } from 'zod'
 
-type State = {
-    name: string
-    description: string
-}
-
-export async function createEnvironmentAction(prev: { message: string; payload: null }, state: FormData) {
+export async function createEnvironmentAction(prev: z.ZodIssue[], state: FormData) {
     try {
         const newEnvironment = {
             name: state.get('name') as string,
             description: state.get('description') as string,
         }
+
         await createEnvironment(newEnvironment)
-        return {
-            message: 'Todo has successfully been added!',
-            payload: null,
-        }
+        return []
     } catch (err) {
-        console.error('Error creating environment:', err)
-        return { message: 'Uh oh, Todo could not be added :(', payload: null }
+        if (err instanceof z.ZodError) {
+            return err.issues
+        }
+
+        return []
     }
 }
