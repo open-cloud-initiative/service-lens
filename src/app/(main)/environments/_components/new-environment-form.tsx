@@ -1,6 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useActionState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -14,10 +15,7 @@ const FormSchema = z.object({
     description: z.string().min(2, { message: 'Description must be at least 2 characters.' }),
 })
 
-const initialState = {
-    name: '',
-    description: '',
-}
+export const initialState = [] as z.infer<typeof FormSchema>[]
 
 export function NewEnvironmentForm() {
     const form = useForm<z.infer<typeof FormSchema>>({
@@ -28,9 +26,11 @@ export function NewEnvironmentForm() {
         },
     })
 
+    const [state, formAction, pending] = useActionState(createEnvironmentAction, { message: '', payload: null })
+
     return (
         <Form {...form}>
-            <form action={createEnvironmentAction} className="space-y-4">
+            <form action={formAction} className="space-y-4">
                 <FormField
                     control={form.control}
                     name="name"
