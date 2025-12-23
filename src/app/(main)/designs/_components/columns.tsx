@@ -12,8 +12,8 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 import { TDesign } from '@/db/schema'
+import Link from 'next/link'
 import { DataTableColumnHeader } from '../../../../components/data-table/data-table-column-header'
-import { TableCellViewer } from './table-cell-viewer'
 
 export const dashboardColumns: ColumnDef<TDesign>[] = [
     {
@@ -43,7 +43,12 @@ export const dashboardColumns: ColumnDef<TDesign>[] = [
         accessorKey: 'header',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Title" />,
         cell: ({ row }) => {
-            return <TableCellViewer item={row.original} />
+            // return <TableCellViewer item={row.original} />
+            return (
+                <Button variant="link" className="w-fit px-0 text-left text-foreground" asChild>
+                    <Link href={`/designs/${row.original.id}`}>{row.original.title}</Link>
+                </Button>
+            )
         },
         enableSorting: false,
     },
