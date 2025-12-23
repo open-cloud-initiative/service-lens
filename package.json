@@ -15,7 +15,7 @@
     "generate:graphql": "graphql-codegen --config ./codegen.ts",
     "generate:migration": "npm run sequelize -- migration:generate --name",
     "postinstall": "npm run migrate:auth",
-    "db:migrate": "npm run sequelize db:migrate",
+    "db:migrate": "npx drizzle-kit push",
     "db:seed": "npx sequelize-cli db:seed:all",
     "db:seed:all": "npm run sequelize db:seed:all",
     "migrate:auth": "npx -y @better-auth/cli migrate",

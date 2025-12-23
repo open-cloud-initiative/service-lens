@@ -4,7 +4,6 @@
 import * as React from 'react'
 
 import { Plus } from 'lucide-react'
-import type { z } from 'zod'
 
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -13,14 +12,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useDataTableInstance } from '@/hooks/use-data-table-instance'
 
+import { TDesign } from '@/db/schema'
 import { DataTable as DataTableNew } from '../../../../components/data-table/data-table'
 import { DataTablePagination } from '../../../../components/data-table/data-table-pagination'
 import { DataTableViewOptions } from '../../../../components/data-table/data-table-view-options'
 import { withDndColumn } from '../../../../components/data-table/table-utils'
 import { dashboardColumns } from './columns'
-import type { sectionSchema } from './schema'
 
-export function DataTable({ data: initialData }: { data: z.infer<typeof sectionSchema>[] }) {
+export function DataTable({ data: initialData }: { data: TDesign[] }) {
     const [data, setData] = React.useState(() => initialData)
     const columns = withDndColumn(dashboardColumns)
     const table = useDataTableInstance({ data, columns, getRowId: (row) => row.id.toString() })
