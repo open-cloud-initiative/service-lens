@@ -59,7 +59,7 @@ export function DataTable({ data: initialData }: { data: z.infer<typeof sectionS
                         <Plus />
                         <span className="hidden lg:inline">Add Section</span>
                     </Button>
-                    <Button variant="outline" asChild>
+                    <Button variant="outline" size="sm" asChild>
                         <Link href="/environments/new">
                             <Plus />
                             <span className="hidden lg:inline">Add Environment</span>
