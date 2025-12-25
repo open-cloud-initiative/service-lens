@@ -13,7 +13,12 @@ export const designs = pgTable('design', {
     deletedAt: timestamp('deleted_at'),
 })
 
-export const designInsertSchema = createInsertSchema(designs).pick({
+export const designInsertSchema = createInsertSchema(designs, {
+    title: (schema) => schema.min(1, 'Title is required').max(255, 'Title must be at most 255 characters'),
+    body: (schema) => schema.min(1, 'Body is required'),
+    description: (schema) =>
+        schema.min(1, 'Description is required').max(1024, 'Description must be at most 1024 characters'),
+}).pick({
     title: true,
     body: true,
     description: true,
