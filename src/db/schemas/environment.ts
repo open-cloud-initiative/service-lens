@@ -1,8 +1,8 @@
-import { integer, pgTable, timestamp, varchar } from 'drizzle-orm/pg-core'
+import { pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 import { createInsertSchema } from 'drizzle-zod'
 
 export const environments = pgTable('environment', {
-    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    id: uuid().primaryKey().defaultRandom(),
     name: varchar({ length: 255 }).notNull(),
     description: varchar({ length: 1024 }).notNull(),
     createdAt: timestamp('created_at').defaultNow(),

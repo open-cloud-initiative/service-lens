@@ -1,8 +1,8 @@
-import { integer, pgTable, text, timestamp, varchar } from 'drizzle-orm/pg-core'
+import { pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 
 export const designs = pgTable('design', {
-    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    id: uuid().primaryKey().defaultRandom(),
     title: varchar({ length: 255 }).notNull(),
     body: text().notNull(),
     description: varchar({ length: 1024 }).notNull(),
