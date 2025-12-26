@@ -4,7 +4,7 @@ import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 export const tags = pgTable(
     'tag',
     {
-        id: bigint({ mode: 'bigint' }).primaryKey().generatedAlwaysAsIdentity(),
+        id: bigint({ mode: 'bigint' }).primaryKey(),
         name: varchar({ length: 255 }).notNull(),
         value: varchar({ length: 1024 }).notNull(),
         createdAt: timestamp('created_at').defaultNow(),

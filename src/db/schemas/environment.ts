@@ -1,5 +1,7 @@
-import { pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
+import { relations } from 'drizzle-orm'
+import { bigint, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 import { createInsertSchema } from 'drizzle-zod'
+import { tags } from './tag'
 
 export const environments = pgTable('environment', {
     id: uuid().primaryKey().defaultRandom(),
@@ -11,6 +13,19 @@ export const environments = pgTable('environment', {
         .$onUpdate(() => new Date()),
     deletedAt: timestamp('deleted_at'),
 })
+
+export const environmentTag = pgTable('environment_tag', {
+    environmentId: uuid()
+        .notNull()
+        .references(() => environments.id, { onDelete: 'cascade' }),
+    tagId: bigint({ mode: 'bigint' })
+        .notNull()
+        .references(() => tags.id, { onDelete: 'cascade' }),
+})
+
+export const environmentRelations = relations(environments, ({ many }) => ({
+    tags: many(tags),
+}))
 
 export const environmentInsertSchema = createInsertSchema(environments, {
     name: (schema) => schema.min(1, 'Name is required').max(255, 'Name must be at most 255 characters'),

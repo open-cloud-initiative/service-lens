@@ -1,5 +1,7 @@
-import { pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
+import { relations } from 'drizzle-orm'
+import { bigint, pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
+import { tags } from './tag'
 
 export const designs = pgTable('design', {
     id: uuid().primaryKey().defaultRandom(),
@@ -12,6 +14,19 @@ export const designs = pgTable('design', {
         .$onUpdate(() => new Date()),
     deletedAt: timestamp('deleted_at'),
 })
+
+export const designTag = pgTable('design_tag', {
+    designId: uuid()
+        .notNull()
+        .references(() => designs.id, { onDelete: 'cascade' }),
+    tagId: bigint({ mode: 'bigint' })
+        .notNull()
+        .references(() => tags.id, { onDelete: 'cascade' }),
+})
+
+export const designRelations = relations(designs, ({ many }) => ({
+    tags: many(tags),
+}))
 
 export const designInsertSchema = createInsertSchema(designs, {
     title: (schema) => schema.min(1, 'Title is required').max(255, 'Title must be at most 255 characters'),

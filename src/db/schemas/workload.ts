@@ -1,5 +1,7 @@
-import { pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
+import { relations } from 'drizzle-orm'
+import { bigint, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
+import { tags } from './tag'
 
 export const workloads = pgTable('workload', {
     id: uuid().primaryKey().defaultRandom(),
@@ -11,6 +13,19 @@ export const workloads = pgTable('workload', {
         .$onUpdate(() => new Date()),
     deletedAt: timestamp('deleted_at'),
 })
+
+export const workloadTag = pgTable('workload_tag', {
+    workloadId: uuid()
+        .notNull()
+        .references(() => workloads.id, { onDelete: 'cascade' }),
+    tagId: bigint({ mode: 'bigint' })
+        .notNull()
+        .references(() => tags.id, { onDelete: 'cascade' }),
+})
+
+export const workloadRelations = relations(workloads, ({ many }) => ({
+    tags: many(tags),
+}))
 
 export const workloadInsertSchema = createInsertSchema(workloads, {
     name: (schema) => schema.min(1, 'Name is required').max(255, 'Name must be at most 255 characters'),
