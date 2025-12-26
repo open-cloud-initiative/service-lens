@@ -1,0 +1,26 @@
+import { integer, pgTable, timestamp, varchar } from 'drizzle-orm/pg-core'
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
+
+export const workloads = pgTable('workload', {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    name: varchar({ length: 255 }).notNull(),
+    description: varchar({ length: 1024 }).notNull(),
+    createdAt: timestamp('created_at').defaultNow(),
+    updatedAt: timestamp('updated_at')
+        .defaultNow()
+        .$onUpdate(() => new Date()),
+    deletedAt: timestamp('deleted_at'),
+})
+
+export const workloadInsertSchema = createInsertSchema(workloads, {
+    name: (schema) => schema.min(1, 'Name is required').max(255, 'Name must be at most 255 characters'),
+    description: (schema) =>
+        schema.min(1, 'Description is required').max(1024, 'Description must be at most 1024 characters'),
+}).pick({
+    name: true,
+    description: true,
+})
+export const workloadSelectSchema = createSelectSchema(workloads)
+
+export type TWorkload = typeof workloads.$inferSelect
+export type TNewWorkload = typeof workloads.$inferInsert
