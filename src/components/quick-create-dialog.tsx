@@ -21,7 +21,10 @@ import { Label } from './ui/label'
 export function QuickCreateDialog() {
     const router = useRouter()
 
-    const [state, formAction, pending] = useActionState(createDesignAction, { errors: [], success: false })
+    const [state, formAction, pending] = useActionState(createDesignAction, {
+        errors: [],
+        success: false,
+    })
 
     useEffect(() => {
         if (state.success) {

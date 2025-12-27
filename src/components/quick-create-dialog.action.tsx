@@ -5,10 +5,13 @@ import { designInsertSchema, designs } from '@/db/schema'
 import 'server-only'
 import { z } from 'zod'
 
-export async function createDesignAction(
-    prev: { errors: z.ZodIssue[]; success: boolean; designId?: string } | undefined,
-    state: FormData,
-) {
+export type CreateDesignActionState = {
+    errors: z.ZodIssue[]
+    success: boolean
+    designId?: string
+}
+
+export async function createDesignAction(prev: CreateDesignActionState, state: FormData) {
     try {
         const newDesign = {
             title: state.get('title') as string,
