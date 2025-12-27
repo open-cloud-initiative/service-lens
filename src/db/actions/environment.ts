@@ -1,15 +1,13 @@
 'use server'
 
 import { db } from '@/db'
-import { environmentInsertSchema, environmentTable } from '@/db/schema'
+import { environmentInsertSchema, environments, TNewEnvironment } from '@/db/schema'
 import { z } from 'zod'
 
-type NewEnvironmnet = typeof environmentTable.$inferInsert
-
-export async function createEnvironment(environment: NewEnvironmnet) {
+export async function createEnvironment(environment: TNewEnvironment) {
     try {
         const parsedEnvironment = environmentInsertSchema.parse(environment)
-        await db.insert(environmentTable).values(parsedEnvironment)
+        await db.insert(environments).values(parsedEnvironment)
     } catch (err) {
         if (err instanceof z.ZodError) {
             return err.issues

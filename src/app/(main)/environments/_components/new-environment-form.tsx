@@ -29,43 +29,40 @@ export function NewEnvironmentForm() {
     const [formErrors, formAction, pending] = useActionState(createEnvironmentAction, [])
 
     return (
-        console.log(formErrors),
-        (
-            <Form {...form}>
-                <form action={formAction} className="space-y-4">
-                    <FormField
-                        control={form.control}
-                        name="name"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Name</FormLabel>
-                                <FormControl>
-                                    <Input id="name" type="text" placeholder="Indy Jones" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="description"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Description</FormLabel>
-                                <FormControl>
-                                    <Input id="description" type="text" {...field} />
-                                </FormControl>
-                                {formErrors.map((error, index) => (
-                                    <FormMessage key={index}>{error.path}</FormMessage>
-                                ))}
-                            </FormItem>
-                        )}
-                    />
-                    <Button className="w-full" type="submit" disabled={pending}>
-                        Save
-                    </Button>
-                </form>
-            </Form>
-        )
+        <Form {...form}>
+            <form action={formAction} className="space-y-4">
+                <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Name</FormLabel>
+                            <FormControl>
+                                <Input id="name" type="text" placeholder="Indy Jones" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Description</FormLabel>
+                            <FormControl>
+                                <Input id="description" type="text" {...field} />
+                            </FormControl>
+                            {formErrors.map((error, index) => (
+                                <FormMessage key={index}>{error.path}</FormMessage>
+                            ))}
+                        </FormItem>
+                    )}
+                />
+                <Button className="w-full" type="submit" disabled={pending}>
+                    Save
+                </Button>
+            </form>
+        </Form>
     )
 }

@@ -6,8 +6,8 @@ import { tags } from './tag'
 export const designs = pgTable('design', {
     id: uuid().primaryKey().defaultRandom(),
     title: varchar({ length: 255 }).notNull(),
-    body: text().notNull(),
-    description: varchar({ length: 1024 }).notNull(),
+    body: text(),
+    description: varchar({ length: 1024 }),
     createdAt: timestamp('created_at').defaultNow(),
     updatedAt: timestamp('updated_at')
         .defaultNow()
@@ -30,9 +30,8 @@ export const designRelations = relations(designs, ({ many }) => ({
 
 export const designInsertSchema = createInsertSchema(designs, {
     title: (schema) => schema.min(1, 'Title is required').max(255, 'Title must be at most 255 characters'),
-    body: (schema) => schema.min(1, 'Body is required'),
-    description: (schema) =>
-        schema.min(1, 'Description is required').max(1024, 'Description must be at most 1024 characters'),
+    body: (schema) => schema.optional(),
+    description: (schema) => schema.max(1024, 'Description must be at most 1024 characters').optional(),
 }).pick({
     title: true,
     body: true,
