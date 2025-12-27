@@ -51,6 +51,8 @@ export function QuickCreateDialog() {
                             type="text"
                             placeholder="Indiana Jones and the Fate of Atlantis"
                             autoComplete="off"
+                            disabled={pending}
+                            required
                         />
                         {/* {formErrors.map((error, index) => (
                             <FormMessage key={index}>{error.path}</FormMessage>
