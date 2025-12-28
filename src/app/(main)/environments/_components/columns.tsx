@@ -40,12 +40,20 @@ export const environmentColumns: ColumnDef<TEnvironment>[] = [
         enableHiding: false,
     },
     {
+        accessorKey: 'id',
+        header: ({ column }) => <DataTableColumnHeader column={column} title="ID" />,
+        cell: ({ row }) => {
+            return <span className="font-mono text-sm text-muted-foreground">{row.original.id}</span>
+        },
+        enableSorting: true,
+    },
+    {
         accessorKey: 'name',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
         cell: ({ row }) => {
             return <TableCellViewer item={row.original} />
         },
-        enableSorting: false,
+        enableSorting: true,
     },
     {
         id: 'actions',
