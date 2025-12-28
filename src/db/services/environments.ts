@@ -1,15 +1,15 @@
-import { Environment } from '@/db/models/environment'
+import { db } from '@/db'
+import { environmentSelectSchema, environments } from '@/db/schemas/environment'
+import { eq } from 'drizzle-orm'
 
 export type Pagination = {
     offset?: number
     limit?: number
 }
 
-export async function createEnvironment({ name, description }: { name: string; description: string }) {
-    const w = new Environment({ name, description })
-    await w.validate()
+export async function findEnvironmentById({ id }: { id: string }) {
+    const rows = await db.select().from(environments).where(eq(environments.id, id)).limit(1)
+    const parsed = environmentSelectSchema.parse(rows[0])
 
-    const workload = await w.save()
-
-    return workload.save()
+    return parsed
 }

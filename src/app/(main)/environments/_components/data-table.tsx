@@ -4,7 +4,6 @@
 import * as React from 'react'
 
 import { Plus } from 'lucide-react'
-import Link from 'next/link'
 import type { z } from 'zod'
 
 import { Badge } from '@/components/ui/badge'
@@ -18,6 +17,7 @@ import { DataTable as DataTableNew } from '../../../../components/data-table/dat
 import { DataTablePagination } from '../../../../components/data-table/data-table-pagination'
 import { DataTableViewOptions } from '../../../../components/data-table/data-table-view-options'
 import { withDndColumn } from '../../../../components/data-table/table-utils'
+import { AddEnvironmentDialog } from './add-environment-dialog'
 import { dashboardColumns } from './columns'
 import type { sectionSchema } from './schema'
 
@@ -60,10 +60,7 @@ export function DataTable({ data: initialData }: { data: z.infer<typeof sectionS
                         <span className="hidden lg:inline">Add Section</span>
                     </Button>
                     <Button variant="outline" size="sm" asChild>
-                        <Link href="/environments/new">
-                            <Plus />
-                            <span className="hidden lg:inline">Add Environment</span>
-                        </Link>
+                        <AddEnvironmentDialog />
                     </Button>
                 </div>
             </div>

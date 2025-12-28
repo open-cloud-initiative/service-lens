@@ -1,12 +1,12 @@
 import { relations } from 'drizzle-orm'
 import { bigint, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
-import { createInsertSchema } from 'drizzle-zod'
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 import { tags } from './tag'
 
 export const environments = pgTable('environment', {
     id: uuid().primaryKey().defaultRandom(),
     name: varchar({ length: 255 }).notNull(),
-    description: varchar({ length: 1024 }).notNull(),
+    description: varchar({ length: 1024 }),
     createdAt: timestamp('created_at').defaultNow(),
     updatedAt: timestamp('updated_at')
         .defaultNow()
@@ -35,6 +35,8 @@ export const environmentInsertSchema = createInsertSchema(environments, {
     name: true,
     description: true,
 })
+
+export const environmentSelectSchema = createSelectSchema(environments)
 
 export type TEnvironment = typeof environments.$inferSelect
 export type TNewEnvironment = typeof environments.$inferInsert
