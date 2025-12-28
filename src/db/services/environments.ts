@@ -13,3 +13,20 @@ export async function findEnvironmentById({ id }: { id: string }) {
 
     return parsed
 }
+
+export async function findEnvironments(pagination?: Pagination) {
+    const query = db.select().from(environments).orderBy(environments.createdAt)
+
+    if (pagination?.limit !== undefined) {
+        query.limit(pagination.limit)
+    }
+
+    if (pagination?.offset !== undefined) {
+        query.offset(pagination.offset)
+    }
+
+    const rows = await query
+    const parsed = environmentSelectSchema.array().parse(rows)
+
+    return parsed
+}
