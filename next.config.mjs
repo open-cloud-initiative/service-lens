@@ -4,7 +4,7 @@ const nextConfig = {
   serverExternalPackages: ["pg"],
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
-  },
+  },  
   async redirects() {
     return [
       {
