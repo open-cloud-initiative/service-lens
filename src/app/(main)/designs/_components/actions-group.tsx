@@ -33,17 +33,10 @@ export function ActionGroup() {
 
     return (
         <ButtonGroup>
-            <ButtonGroup className="hidden sm:flex">
+            <ButtonGroup>
                 <Button variant="outline" aria-label="Go Back">
                     Edit
                 </Button>
-            </ButtonGroup>
-            <ButtonGroup>
-                <Button variant="outline">Archive</Button>
-                <Button variant="outline">Report</Button>
-            </ButtonGroup>
-            <ButtonGroup>
-                <Button variant="outline">Snooze</Button>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" size="icon" aria-label="More Options">
