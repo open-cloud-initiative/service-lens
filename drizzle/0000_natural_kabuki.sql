@@ -58,19 +58,19 @@ CREATE TABLE "session" (
 	CONSTRAINT "session_token_unique" UNIQUE("token")
 );
 --> statement-breakpoint
+CREATE TABLE "team_member" (
+	"id" text PRIMARY KEY NOT NULL,
+	"team_id" text NOT NULL,
+	"user_id" text NOT NULL,
+	"created_at" timestamp
+);
+--> statement-breakpoint
 CREATE TABLE "team" (
 	"id" text PRIMARY KEY NOT NULL,
 	"name" text NOT NULL,
 	"organization_id" text NOT NULL,
 	"created_at" timestamp NOT NULL,
 	"updated_at" timestamp
-);
---> statement-breakpoint
-CREATE TABLE "team_member" (
-	"id" text PRIMARY KEY NOT NULL,
-	"team_id" text NOT NULL,
-	"user_id" text NOT NULL,
-	"created_at" timestamp
 );
 --> statement-breakpoint
 CREATE TABLE "user" (
@@ -93,8 +93,51 @@ CREATE TABLE "verification" (
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
+CREATE TABLE "design_tag" (
+	"designId" uuid NOT NULL,
+	"tagId" bigint NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE "design" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"title" varchar(255) NOT NULL,
+	"body" text,
+	"description" varchar(1024),
+	"created_at" timestamp DEFAULT now(),
+	"updated_at" timestamp DEFAULT now(),
+	"deleted_at" timestamp
+);
+--> statement-breakpoint
+CREATE TABLE "environment_tag" (
+	"environmentId" uuid NOT NULL,
+	"tagId" bigint NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE "environment" (
-	"id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "environment_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START WITH 1 CACHE 1),
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"name" varchar(255) NOT NULL,
+	"description" varchar(1024),
+	"created_at" timestamp DEFAULT now(),
+	"updated_at" timestamp DEFAULT now(),
+	"deleted_at" timestamp
+);
+--> statement-breakpoint
+CREATE TABLE "tag" (
+	"id" bigint PRIMARY KEY NOT NULL,
+	"name" varchar(255) NOT NULL,
+	"value" varchar(1024) NOT NULL,
+	"created_at" timestamp DEFAULT now(),
+	"updated_at" timestamp DEFAULT now(),
+	"deleted_at" timestamp
+);
+--> statement-breakpoint
+CREATE TABLE "workload_tag" (
+	"workloadId" uuid NOT NULL,
+	"tagId" bigint NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE "workload" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" varchar(255) NOT NULL,
 	"description" varchar(1024) NOT NULL,
 	"created_at" timestamp DEFAULT now(),
@@ -108,9 +151,15 @@ ALTER TABLE "invitation" ADD CONSTRAINT "invitation_inviter_id_user_id_fk" FOREI
 ALTER TABLE "member" ADD CONSTRAINT "member_organization_id_organization_id_fk" FOREIGN KEY ("organization_id") REFERENCES "public"."organization"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "member" ADD CONSTRAINT "member_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "session" ADD CONSTRAINT "session_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "team" ADD CONSTRAINT "team_organization_id_organization_id_fk" FOREIGN KEY ("organization_id") REFERENCES "public"."organization"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "team_member" ADD CONSTRAINT "team_member_team_id_team_id_fk" FOREIGN KEY ("team_id") REFERENCES "public"."team"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "team_member" ADD CONSTRAINT "team_member_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "team_member" ADD CONSTRAINT "team_member_user_id_team_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."team"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "team" ADD CONSTRAINT "team_organization_id_organization_id_fk" FOREIGN KEY ("organization_id") REFERENCES "public"."organization"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "design_tag" ADD CONSTRAINT "design_tag_designId_design_id_fk" FOREIGN KEY ("designId") REFERENCES "public"."design"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "design_tag" ADD CONSTRAINT "design_tag_tagId_tag_id_fk" FOREIGN KEY ("tagId") REFERENCES "public"."tag"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "environment_tag" ADD CONSTRAINT "environment_tag_environmentId_environment_id_fk" FOREIGN KEY ("environmentId") REFERENCES "public"."environment"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "environment_tag" ADD CONSTRAINT "environment_tag_tagId_tag_id_fk" FOREIGN KEY ("tagId") REFERENCES "public"."tag"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "workload_tag" ADD CONSTRAINT "workload_tag_workloadId_workload_id_fk" FOREIGN KEY ("workloadId") REFERENCES "public"."workload"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "workload_tag" ADD CONSTRAINT "workload_tag_tagId_tag_id_fk" FOREIGN KEY ("tagId") REFERENCES "public"."tag"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 CREATE INDEX "account_userId_idx" ON "account" USING btree ("user_id");--> statement-breakpoint
 CREATE INDEX "invitation_organizationId_idx" ON "invitation" USING btree ("organization_id");--> statement-breakpoint
 CREATE INDEX "invitation_email_idx" ON "invitation" USING btree ("email");--> statement-breakpoint
@@ -118,7 +167,9 @@ CREATE INDEX "member_organizationId_idx" ON "member" USING btree ("organization_
 CREATE INDEX "member_userId_idx" ON "member" USING btree ("user_id");--> statement-breakpoint
 CREATE UNIQUE INDEX "organization_slug_uidx" ON "organization" USING btree ("slug");--> statement-breakpoint
 CREATE INDEX "session_userId_idx" ON "session" USING btree ("user_id");--> statement-breakpoint
-CREATE INDEX "team_organizationId_idx" ON "team" USING btree ("organization_id");--> statement-breakpoint
 CREATE INDEX "teamMember_teamId_idx" ON "team_member" USING btree ("team_id");--> statement-breakpoint
 CREATE INDEX "teamMember_userId_idx" ON "team_member" USING btree ("user_id");--> statement-breakpoint
-CREATE INDEX "verification_identifier_idx" ON "verification" USING btree ("identifier");
+CREATE INDEX "team_organizationId_idx" ON "team" USING btree ("organization_id");--> statement-breakpoint
+CREATE INDEX "verification_identifier_idx" ON "verification" USING btree ("identifier");--> statement-breakpoint
+CREATE INDEX "tag_name_index" ON "tag" USING btree ("name");--> statement-breakpoint
+CREATE UNIQUE INDEX "tag_name_value_unique_index" ON "tag" USING btree ("name","value");

@@ -1,5 +1,5 @@
-import { relations } from 'drizzle-orm'
-import { boolean, index, pgTable, text, timestamp, uniqueIndex } from 'drizzle-orm/pg-core'
+import { relations } from 'drizzle-orm';
+import { boolean, index, pgTable, text, timestamp, uniqueIndex } from 'drizzle-orm/pg-core';
 
 export const user = pgTable('user', {
     id: text('id').primaryKey(),
@@ -13,6 +13,9 @@ export const user = pgTable('user', {
         .$onUpdate(() => /* @__PURE__ */ new Date())
         .notNull(),
 })
+
+export type TUser = typeof user.$inferSelect;
+export type NewUser = typeof user.$inferInsert;
 
 export const session = pgTable(
     'session',
@@ -34,6 +37,9 @@ export const session = pgTable(
     },
     (table) => [index('session_userId_idx').on(table.userId)],
 )
+
+export type TSession = typeof session.$inferSelect;
+export type NewSession = typeof session.$inferInsert;
 
 export const account = pgTable(
     'account',
@@ -59,6 +65,9 @@ export const account = pgTable(
     (table) => [index('account_userId_idx').on(table.userId)],
 )
 
+export type TAccount = typeof account.$inferSelect;
+export type NewAccount = typeof account.$inferInsert;
+
 export const verification = pgTable(
     'verification',
     {
@@ -75,6 +84,9 @@ export const verification = pgTable(
     (table) => [index('verification_identifier_idx').on(table.identifier)],
 )
 
+export type TVerification = typeof verification.$inferSelect;
+export type NewVerification = typeof verification.$inferInsert;
+
 export const organization = pgTable(
     'organization',
     {
@@ -87,6 +99,9 @@ export const organization = pgTable(
     },
     (table) => [uniqueIndex('organization_slug_uidx').on(table.slug)],
 )
+
+export type TOrganization = typeof organization.$inferSelect;
+export type NewOrganization = typeof organization.$inferInsert;
 
 export const team = pgTable(
     'team',
@@ -102,6 +117,9 @@ export const team = pgTable(
     (table) => [index('team_organizationId_idx').on(table.organizationId)],
 )
 
+export type TTeam = typeof team.$inferSelect;
+export type NewTeam = typeof team.$inferInsert;
+
 export const teamMember = pgTable(
     'team_member',
     {
@@ -116,6 +134,9 @@ export const teamMember = pgTable(
     },
     (table) => [index('teamMember_teamId_idx').on(table.teamId), index('teamMember_userId_idx').on(table.userId)],
 )
+
+export type TTeamMember = typeof teamMember.$inferSelect;
+export type NewTeamMember = typeof teamMember.$inferInsert;
 
 export const member = pgTable(
     'member',
@@ -135,6 +156,9 @@ export const member = pgTable(
         index('member_userId_idx').on(table.userId),
     ],
 )
+
+export type TMember = typeof member.$inferSelect;
+export type NewMember = typeof member.$inferInsert;
 
 export const invitation = pgTable(
     'invitation',
