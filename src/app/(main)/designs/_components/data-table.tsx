@@ -10,19 +10,26 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { useDataTableInstance } from '@/hooks/use-data-table-instance'
 
-import { DataTable as DataTableNew } from '@/components/data-table/data-table'
-import { DataTablePagination } from '@/components/data-table/data-table-pagination'
-import { DataTableViewOptions } from '@/components/data-table/data-table-view-options'
-import { withDndColumn } from '@/components/data-table/table-utils'
+import { DataTable as DataTableNew } from '@/components/data-table2/data-table'
+import { DataTablePagination } from '@/components/data-table2/data-table-pagination'
+import { DataTableViewOptions } from '@/components/data-table2/data-table-view-options'
+import { withDndColumn } from '@/components/data-table2/table-utils'
 import { TDesign } from '@/db/schema'
+import { useDataTable } from '@/hooks/use-data-table'
+import type { QueryKeys } from '@/types/data-table'
 import { dashboardColumns } from './columns'
 
-export function DataTable({ data: initialData }: { data: TDesign[] }) {
+interface DesignTableProps {
+    data: TDesign[]
+    pageCount: number
+    queryKeys?: Partial<QueryKeys>
+}
+
+export function DataTable({ data: initialData, queryKeys, pageCount }: DesignTableProps) {
     const [data, setData] = React.useState(() => initialData)
     const columns = withDndColumn(dashboardColumns)
-    const table = useDataTableInstance({ data, columns, getRowId: (row) => row.id.toString() })
+    const { table } = useDataTable({ data, columns, pageCount, queryKeys, getRowId: (row) => row.id.toString() })
 
     return (
         <Tabs defaultValue="outline" className="w-full flex-col justify-start gap-6">
@@ -61,7 +68,7 @@ export function DataTable({ data: initialData }: { data: TDesign[] }) {
             </div>
             <TabsContent value="outline" className="relative flex flex-col gap-4 overflow-auto">
                 <div className="overflow-hidden rounded-lg border">
-                    <DataTableNew dndEnabled table={table} columns={columns} onReorder={setData}/>
+                    <DataTableNew dndEnabled table={table} columns={columns} onReorder={setData} />
                 </div>
                 <DataTablePagination table={table} />
             </TabsContent>

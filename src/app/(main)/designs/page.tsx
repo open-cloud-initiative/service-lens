@@ -1,25 +1,21 @@
-import { db } from '@/db'
-import { design, designSelectSchema } from '@/db/schema'
-import { asc } from 'drizzle-orm'
+import { getDesigns } from '@/db/queries/designs'
+import { paginationParams } from '@/db/queries/pagination'
+import type { SearchParams } from '@/types'
 import { DataTable } from './_components/data-table'
 
-export default async function Page() {
-    const findManyDesigns = async () => {
-        const rows = await db
-            .select()
-            .from(design)
-            .orderBy(asc(design.title)) // order by is mandatory
-            .limit(100) // the number of rows to return
-            .offset(0)
+interface IndexPageProps {
+    searchParams: Promise<SearchParams>
+}
 
-        return rows.map((row) => designSelectSchema.parse(row))
-    }
-
-    const data = await findManyDesigns()
+export default async function Page({ searchParams }: IndexPageProps) {
+    const params = await searchParams
+    const parsedParams = paginationParams.parse(params)
+    console.log(parsedParams)
+    const { data, pageCount } = await getDesigns(parsedParams)
 
     return (
         <div className="@container/main flex flex-col gap-4 md:gap-6">
-            <DataTable data={data} />
+            <DataTable data={data} queryKeys={params} pageCount={pageCount} />
         </div>
     )
 }

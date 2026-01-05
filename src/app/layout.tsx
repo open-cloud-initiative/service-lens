@@ -4,13 +4,14 @@ import { Inter } from 'next/font/google'
 
 import type { Metadata } from 'next'
 
-import { ThemeProvider } from '@/components/providers'
+import { QueryProvider } from '@/components/providers'
 import { Toaster } from '@/components/ui/sonner'
 import { APP_CONFIG } from '@/config/app-config'
 import { PREFERENCE_DEFAULTS } from '@/lib/preferences/preferences-config'
 import { ThemeBootScript } from '@/scripts/theme-boot'
+import { PreferencesStoreProvider } from '@/stores/preferences/preferences-provider'
 
-import './globals.css'
+import '@/styles/globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -38,10 +39,17 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
                 <ThemeBootScript />
             </head>
             <body className={`${inter.className} min-h-screen antialiased`}>
-                <ThemeProvider>
-                    {children}
-                    <Toaster />
-                </ThemeProvider>
+                <PreferencesStoreProvider
+                    themeMode={theme_mode}
+                    themePreset={theme_preset}
+                    contentLayout={content_layout}
+                    navbarStyle={navbar_style}
+                >
+                    <QueryProvider>
+                        {children}
+                        <Toaster />
+                    </QueryProvider>
+                </PreferencesStoreProvider>
             </body>
         </html>
     )

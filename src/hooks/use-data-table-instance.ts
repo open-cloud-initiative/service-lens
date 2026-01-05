@@ -1,5 +1,6 @@
 'use no memo'
 
+import type { QueryKeys } from '@/types/data-table'
 import * as React from 'react'
 
 import {
@@ -18,6 +19,7 @@ import {
 
 type UseDataTableInstanceProps<TData, TValue> = {
     data: TData[]
+    queryKeys?: Partial<QueryKeys>
     columns: ColumnDef<TData, TValue>[]
     enableRowSelection?: boolean
     defaultPageIndex?: number
@@ -39,7 +41,7 @@ export function useDataTableInstance<TData, TValue>({
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [pagination, setPagination] = React.useState({
         pageIndex: defaultPageIndex ?? 0,
-        pageSize: defaultPageSize ?? 10,
+        pageSize: defaultPageSize ?? 1,
     })
 
     const table = useReactTable({

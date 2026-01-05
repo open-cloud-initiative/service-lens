@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 import { TEnvironment } from '@/db/schema'
-import { DataTableColumnHeader } from '../../../../components/data-table/data-table-column-header'
+import { DataTableColumnHeader } from '../../../../components/data-table2/data-table-column-header'
 import { TableCellViewer } from './table-cell-viewer'
 
 export const environmentColumns: ColumnDef<TEnvironment>[] = [

@@ -1,5 +1,5 @@
 import { db } from '@/db'
-import { environmentSelectSchema, environments } from '@/db/schemas/environment'
+import { environment } from '@/db/schemas/environment'
 import { eq } from 'drizzle-orm'
 
 export type Pagination = {
@@ -8,14 +8,14 @@ export type Pagination = {
 }
 
 export async function findEnvironmentById({ id }: { id: string }) {
-    const rows = await db.select().from(environments).where(eq(environments.id, id)).limit(1)
-    const parsed = environmentSelectSchema.parse(rows[0])
+    const rows = await db.select().from(environment).where(eq(environment.id, id)).limit(1)
+    const parsed = .parse(rows[0])
 
     return parsed
 }
 
-export async function findEnvironments(pagination?: Pagination) {
-    const query = db.select().from(environments).orderBy(environments.createdAt)
+export async function findenvironment(pagination?: Pagination) {
+    const query = db.select().from(environment).orderBy(environment.createdAt)
 
     if (pagination?.limit !== undefined) {
         query.limit(pagination.limit)
@@ -26,7 +26,7 @@ export async function findEnvironments(pagination?: Pagination) {
     }
 
     const rows = await query
-    const parsed = environmentSelectSchema.array().parse(rows)
+    const parsed = environmentelectSchema.array().parse(rows)
 
     return parsed
 }
