@@ -1,5 +1,5 @@
 import { db } from '@/db'
-import { designs, designSelectSchema } from '@/db/schema'
+import { design, designSelectSchema } from '@/db/schema'
 import { asc } from 'drizzle-orm'
 import { DataTable } from './_components/data-table'
 
@@ -7,8 +7,8 @@ export default async function Page() {
     const findManyDesigns = async () => {
         const rows = await db
             .select()
-            .from(designs)
-            .orderBy(asc(designs.title)) // order by is mandatory
+            .from(design)
+            .orderBy(asc(design.title)) // order by is mandatory
             .limit(100) // the number of rows to return
             .offset(0)
 

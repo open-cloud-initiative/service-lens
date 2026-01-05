@@ -2,9 +2,9 @@ import { pgTable } from '@/db/utils'
 import { relations } from 'drizzle-orm'
 import { bigint, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
-import { tags } from './tag'
+import { tag } from './tag'
 
-export const workloads = pgTable('workload', {
+export const workload = pgTable('workload', {
     id: uuid().primaryKey().defaultRandom(),
     name: varchar({ length: 255 }).notNull(),
     description: varchar({ length: 1024 }).notNull(),
@@ -15,20 +15,23 @@ export const workloads = pgTable('workload', {
     deletedAt: timestamp('deleted_at'),
 })
 
+export type TWorkload = typeof workload.$inferSelect
+export type TNewWorkload = typeof workload.$inferInsert
+
 export const workloadTag = pgTable('workload_tag', {
     workloadId: uuid()
         .notNull()
-        .references(() => workloads.id, { onDelete: 'cascade' }),
+        .references(() => workload.id, { onDelete: 'cascade' }),
     tagId: bigint({ mode: 'bigint' })
         .notNull()
-        .references(() => tags.id, { onDelete: 'cascade' }),
+        .references(() => tag.id, { onDelete: 'cascade' }),
 })
 
-export const workloadRelations = relations(workloads, ({ many }) => ({
-    tags: many(tags),
+export const workloadRelations = relations(workload, ({ many }) => ({
+    tags: many(tag),
 }))
 
-export const workloadInsertSchema = createInsertSchema(workloads, {
+export const workloadInsertSchema = createInsertSchema(workload, {
     name: (schema) => schema.min(1, 'Name is required').max(255, 'Name must be at most 255 characters'),
     description: (schema) =>
         schema.min(1, 'Description is required').max(1024, 'Description must be at most 1024 characters'),
@@ -36,7 +39,4 @@ export const workloadInsertSchema = createInsertSchema(workloads, {
     name: true,
     description: true,
 })
-export const workloadSelectSchema = createSelectSchema(workloads)
-
-export type TWorkload = typeof workloads.$inferSelect
-export type TNewWorkload = typeof workloads.$inferInsert
+export const workloadSelectSchema = createSelectSchema(workload)
