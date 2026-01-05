@@ -29,7 +29,15 @@ interface DesignTableProps {
 export function DataTable({ data: initialData, queryKeys, pageCount }: DesignTableProps) {
     const [data, setData] = React.useState(() => initialData)
     const columns = withDndColumn(dashboardColumns)
-    const { table } = useDataTable({ data, columns, pageCount, queryKeys, getRowId: (row) => row.id.toString() })
+    const { table } = useDataTable({
+        data,
+        columns,
+        pageCount,
+        queryKeys,
+        getRowId: (row) => row.id.toString(),
+        shallow: false,
+        clearOnDefault: true,
+    })
 
     return (
         <Tabs defaultValue="outline" className="w-full flex-col justify-start gap-6">
