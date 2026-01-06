@@ -18,7 +18,7 @@ import { getInitials } from '@/lib/utils'
 import type { User } from 'better-auth'
 
 export function TeamSwitcher({ user }: { user?: User }) {
-     const onClick = async () => {
+    const onClick = async () => {
         await signOut({
             fetchOptions: {
                 onError: (ctx) => {
@@ -36,40 +36,24 @@ export function TeamSwitcher({ user }: { user?: User }) {
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Avatar className="size-9 rounded-lg">
-                    <AvatarImage
-                        src={user?.image || undefined}
-                        alt={user?.name}
-                    />
-                    <AvatarFallback className="rounded-lg">
-                        {getInitials(user?.name || '')}
-                    </AvatarFallback>
+                    <AvatarImage src={user?.image || undefined} alt={user?.name} />
+                    <AvatarFallback className="rounded-lg">{getInitials(user?.name || '')}</AvatarFallback>
                 </Avatar>
             </DropdownMenuTrigger>
-            <DropdownMenuContent
-                className="min-w-56 space-y-1 rounded-lg"
-                side="bottom"
-                align="end"
-                sideOffset={4}
-            >
-                 <DropdownMenuItem>
-                   <Avatar className="h-8 w-8 rounded-lg grayscale">
-                                <Avatar className="size-9 rounded-lg">
-                    <AvatarImage
-                        src={user?.image || undefined}
-                        alt={user?.name}
-                    />
-                    <AvatarFallback className="rounded-lg">
-                        {getInitials(user?.name || '')}
-                    </AvatarFallback>
-                </Avatar>
-                            </Avatar>
-                            <div className="grid flex-1 text-left text-sm leading-tight">
-                                <span className="truncate font-medium">{user?.name}</span>
-                                <span className="truncate text-muted-foreground text-xs">{user?.email}</span>
-                            </div>
-                            <EllipsisVertical className="ml-auto size-4" />
-                   
-                        </DropdownMenuItem>
+            <DropdownMenuContent className="min-w-56 space-y-1 rounded-lg" side="bottom" align="end" sideOffset={4}>
+                <DropdownMenuItem>
+                    <Avatar className="h-8 w-8 rounded-lg grayscale">
+                        <Avatar className="size-9 rounded-lg">
+                            <AvatarImage src={user?.image || undefined} alt={user?.name} />
+                            <AvatarFallback className="rounded-lg">{getInitials(user?.name || '')}</AvatarFallback>
+                        </Avatar>
+                    </Avatar>
+                    <div className="grid flex-1 text-left text-sm leading-tight">
+                        <span className="truncate font-medium">{user?.name}</span>
+                        <span className="truncate text-muted-foreground text-xs">{user?.email}</span>
+                    </div>
+                    <EllipsisVertical className="ml-auto size-4" />
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                     <DropdownMenuItem>

@@ -1,5 +1,3 @@
-'use no memo'
-
 import type { QueryKeys } from '@/types/data-table'
 import * as React from 'react'
 

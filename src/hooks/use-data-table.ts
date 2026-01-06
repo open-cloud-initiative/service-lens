@@ -1,5 +1,4 @@
 'use client'
-'use no memo'
 
 import {
     type ColumnFiltersState,
@@ -80,6 +79,7 @@ export function useDataTable<TData>(props: UseDataTableProps<TData>) {
         startTransition,
         ...tableProps
     } = props
+
     const pageKey = queryKeys?.page ?? PAGE_KEY
     const perPageKey = queryKeys?.perPage ?? PER_PAGE_KEY
     const sortKey = queryKeys?.sort ?? SORT_KEY

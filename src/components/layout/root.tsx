@@ -9,7 +9,7 @@ import { auth } from '@/lib/auth'
 import { SIDEBAR_COLLAPSIBLE_VALUES, SIDEBAR_VARIANT_VALUES } from '@/lib/preferences/layout'
 import { cn } from '@/lib/utils'
 import { getPreference } from '@/server/server-actions'
-import { headers } from "next/headers"
+import { headers } from 'next/headers'
 
 import { LayoutControls } from './sidebar/layout-controls'
 import { SearchDialog } from './sidebar/search-dialog'
@@ -25,7 +25,7 @@ export async function RootLayout({ children }: Readonly<{ children: ReactNode }>
     ])
 
     const session = await auth.api.getSession({
-        headers: await headers()
+        headers: await headers(),
     })
 
     return (

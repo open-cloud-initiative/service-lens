@@ -11,30 +11,34 @@ import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
-import { DataTable as DataTableNew } from '@/components/data-table2/data-table'
-import { DataTablePagination } from '@/components/data-table2/data-table-pagination'
-import { DataTableViewOptions } from '@/components/data-table2/data-table-view-options'
-import { withDndColumn } from '@/components/data-table2/table-utils'
-import { TDesign } from '@/db/schema'
+import { DataTable } from '@/components/data-table/data-table'
+import { DataTablePagination } from '@/components/data-table/data-table-pagination'
+import { DataTableViewOptions } from '@/components/data-table/data-table-view-options'
+import { withDndColumn } from '@/components/data-table/table-utils'
+import { getDesigns } from '@/db/queries/designs'
 import { useDataTable } from '@/hooks/use-data-table'
 import type { QueryKeys } from '@/types/data-table'
-import { dashboardColumns } from './columns'
+import { designColumns } from './columns'
 
 interface DesignTableProps {
-    data: TDesign[]
-    pageCount: number
+    promises: Promise<[Awaited<ReturnType<typeof getDesigns>>]>
     queryKeys?: Partial<QueryKeys>
 }
 
-export function DataTable({ data: initialData, queryKeys, pageCount }: DesignTableProps) {
-    const [data, setData] = React.useState(() => initialData)
-    const columns = withDndColumn(dashboardColumns)
+export function DesignDataTable({ promises, queryKeys }: DesignTableProps) {
+    const columns = withDndColumn(designColumns)
+    const [{ data, pageCount }] = React.use(promises)
+
     const { table } = useDataTable({
         data,
         columns,
         pageCount,
         queryKeys,
-        getRowId: (row) => row.id.toString(),
+        initialState: {
+            sorting: [{ id: 'createdAt', desc: true }],
+            columnPinning: { right: ['actions'] },
+        },
+        getRowId: (row) => row.id,
         shallow: false,
         clearOnDefault: true,
     })
@@ -76,7 +80,7 @@ export function DataTable({ data: initialData, queryKeys, pageCount }: DesignTab
             </div>
             <TabsContent value="outline" className="relative flex flex-col gap-4 overflow-auto">
                 <div className="overflow-hidden rounded-lg border">
-                    <DataTableNew dndEnabled table={table} columns={columns} onReorder={setData} />
+                    <DataTable table={table} columns={columns} />
                 </div>
                 <DataTablePagination table={table} />
             </TabsContent>

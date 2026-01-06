@@ -3,10 +3,10 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { TDesign } from '@/db/schema'
 import type { ColumnDef } from '@tanstack/react-table'
 import Link from 'next/link'
-import { DataTableColumnHeader } from '../../../../components/data-table2/data-table-column-header'
+import { DataTableColumnHeader } from '../../../../components/data-table/data-table-column-header'
 import { DataTableRowActions } from './data-rows-actions'
 
-export const dashboardColumns: ColumnDef<TDesign>[] = [
+export const designColumns: ColumnDef<TDesign>[] = [
     {
         id: 'select',
         header: ({ table }) => (

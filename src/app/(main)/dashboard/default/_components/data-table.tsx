@@ -1,5 +1,4 @@
 'use client'
-'use no memo'
 
 import * as React from 'react'
 
@@ -14,10 +13,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useDataTable } from '@/hooks/use-data-table'
 
 import type { QueryKeys } from '@/types/data-table'
-import { DataTable as DataTableNew } from '../../../../../components/data-table2/data-table'
-import { DataTablePagination } from '../../../../../components/data-table2/data-table-pagination'
-import { DataTableViewOptions } from '../../../../../components/data-table2/data-table-view-options'
-import { withDndColumn } from '../../../../../components/data-table2/table-utils'
+import { DataTable as DataTableNew } from '../../../../../components/data-table/data-table'
+import { DataTablePagination } from '../../../../../components/data-table/data-table-pagination'
+import { DataTableViewOptions } from '../../../../../components/data-table/data-table-view-options'
+import { withDndColumn } from '../../../../../components/data-table/table-utils'
 import { dashboardColumns } from './columns'
 import type { sectionSchema } from './schema'
 
