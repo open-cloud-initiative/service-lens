@@ -32,7 +32,7 @@ interface DataTableProps<TData, TValue> {
 function renderTableBody<TData, TValue>({
     table,
     columns,
-    dndEnabled,
+    dndEnabled = false,
     dataIds,
 }: {
     table: TanStackTable<TData>

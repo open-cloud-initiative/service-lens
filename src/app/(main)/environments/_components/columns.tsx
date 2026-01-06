@@ -1,19 +1,10 @@
-import type { ColumnDef } from '@tanstack/react-table'
-import { EllipsisVertical } from 'lucide-react'
-
+import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-
 import { TEnvironment } from '@/db/schema'
-import { DataTableColumnHeader } from '../../../../components/data-table/data-table-column-header'
-import { TableCellViewer } from './table-cell-viewer'
+import type { ColumnDef } from '@tanstack/react-table'
+import Link from 'next/link'
+import { DataTableRowActions } from './data-rows-actions'
 
 export const environmentColumns: ColumnDef<TEnvironment>[] = [
     {
@@ -40,44 +31,21 @@ export const environmentColumns: ColumnDef<TEnvironment>[] = [
         enableHiding: false,
     },
     {
-        accessorKey: 'id',
-        header: ({ column }) => <DataTableColumnHeader column={column} title="ID" />,
-        cell: ({ row }) => {
-            return <span className="font-mono text-sm text-muted-foreground">{row.original.id}</span>
-        },
-        enableSorting: true,
-    },
-    {
-        accessorKey: 'name',
+        accessorKey: 'header',
         header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
         cell: ({ row }) => {
-            return <TableCellViewer item={row.original} />
+            // return <TableCellViewer item={row.original} />
+            return (
+                <Button variant="link" className="w-fit px-0 text-left text-foreground" asChild>
+                    <Link href={`/names/${row.original.id}`}>{row.original.name}</Link>
+                </Button>
+            )
         },
-        enableSorting: true,
+        enableSorting: false,
     },
     {
         id: 'actions',
-        cell: () => (
-            <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                    <Button
-                        variant="ghost"
-                        className="flex size-8 text-muted-foreground data-[state=open]:bg-muted"
-                        size="icon"
-                    >
-                        <EllipsisVertical />
-                        <span className="sr-only">Open menu</span>
-                    </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-32">
-                    <DropdownMenuItem>Edit</DropdownMenuItem>
-                    <DropdownMenuItem>Make a copy</DropdownMenuItem>
-                    <DropdownMenuItem>Favorite</DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
-                </DropdownMenuContent>
-            </DropdownMenu>
-        ),
+        cell: ({ row }) => <DataTableRowActions row={row} />,
         enableSorting: false,
     },
 ]

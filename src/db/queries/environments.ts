@@ -1,17 +1,17 @@
 import 'server-only'
 
 import { db } from '@/db'
-import { designs } from '@/db/schema'
+import { designs, environments } from '@/db/schema'
 import { count } from 'drizzle-orm'
 import { paginationParams } from './pagination'
 
-export type GetDesignsSchema = ReturnType<typeof paginationParams.parse>
+export type getEnvironmentsSchema = ReturnType<typeof paginationParams.parse>
 
-export async function getDesigns(input: GetDesignsSchema) {
+export async function getEnvironments(input: getEnvironmentsSchema) {
     try {
         const offset = (input.page - 1) * input.perPage
         const { data, total } = await db.transaction(async (tx) => {
-            const data = await tx.select().from(designs).limit(input.perPage).offset(offset)
+            const data = await tx.select().from(environments).limit(input.perPage).offset(offset)
 
             const total = await tx
                 .select({

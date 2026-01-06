@@ -1,12 +1,27 @@
-import { findEnvironments } from '@/db/services/environments'
-import { DataTable } from './_components/data-table'
+import { getEnvironments } from '@/db/queries/environments'
+import { paginationParams } from '@/db/queries/pagination'
+import type { SearchParams } from '@/types'
+import { EnvironmentDataTable } from './_components/data-table'
 
-export default async function Page() {
-    const data = await findEnvironments()
+interface IndexPageProps {
+    searchParams: Promise<SearchParams>
+}
+
+export const revalidate = 0
+
+export default async function Page({ searchParams }: IndexPageProps) {
+    const params = await searchParams
+    const parsedParams = paginationParams.parse(params)
+
+    const promises = Promise.all([
+        getEnvironments({
+            ...parsedParams,
+        }),
+    ])
 
     return (
         <div className="@container/main flex flex-col gap-4 md:gap-6">
-            <DataTable data={data} />
+            <EnvironmentDataTable promises={promises} />
         </div>
     )
 }

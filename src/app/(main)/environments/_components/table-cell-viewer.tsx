@@ -18,7 +18,7 @@ import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 import { useIsMobile } from '@/hooks/use-mobile'
 
-import type { TEnvironment } from '@/db/schemas/environment'
+import { TDesign } from '@/db/schema'
 
 const chartData = [
     { month: 'January', desktop: 186, mobile: 80 },
@@ -40,19 +40,19 @@ const chartConfig = {
     },
 } satisfies ChartConfig
 
-export function TableCellViewer({ item }: { item: TEnvironment }) {
+export function TableCellViewer({ item }: { item: TDesign }) {
     const isMobile = useIsMobile()
 
     return (
         <Drawer direction={isMobile ? 'bottom' : 'right'}>
             <DrawerTrigger asChild>
                 <Button variant="link" className="w-fit px-0 text-left text-foreground">
-                    {item.name}
+                    {item.title}
                 </Button>
             </DrawerTrigger>
             <DrawerContent>
                 <DrawerHeader className="gap-1">
-                    <DrawerTitle>{item.name}</DrawerTitle>
+                    <DrawerTitle>{item.title}</DrawerTitle>
                     <DrawerDescription>Showing total visitors for the last 6 months</DrawerDescription>
                 </DrawerHeader>
                 <div className="flex flex-col gap-4 overflow-y-auto px-4 text-sm">
@@ -110,8 +110,8 @@ export function TableCellViewer({ item }: { item: TEnvironment }) {
                     )}
                     <form className="flex flex-col gap-4">
                         <div className="flex flex-col gap-3">
-                            <Label htmlFor="header">Name</Label>
-                            <Input id="header" defaultValue={item.name} />
+                            <Label htmlFor="header">Title</Label>
+                            <Input id="header" defaultValue={item.title} />
                         </div>
                     </form>
                 </div>

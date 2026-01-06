@@ -1,7 +1,7 @@
 'use server'
 
 import { db } from '@/db'
-import { design, designInsertSchema } from '@/db/schema'
+import { designInsertSchema, designs } from '@/db/schema'
 import 'server-only'
 import { z } from 'zod'
 
@@ -18,7 +18,7 @@ export async function createDesignAction(prev: CreateDesignActionState, state: F
         }
 
         const parsedDesign = designInsertSchema.parse(newDesign)
-        const [item] = await db.insert(design).values(parsedDesign).returning({ insertedId: design.id })
+        const [item] = await db.insert(designs).values(parsedDesign).returning({ insertedId: designs.id })
 
         return { errors: [], success: true, designId: item.insertedId }
     } catch (err) {

@@ -1,4 +1,5 @@
 'use client'
+'use no memo'
 
 import * as React from 'react'
 
@@ -9,20 +10,38 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { useDataTableInstance } from '@/hooks/use-data-table-instance'
 
-import { DataTable as DataTableNew } from '@/components/data-table/data-table'
+import { DataTable } from '@/components/data-table/data-table'
 import { DataTablePagination } from '@/components/data-table/data-table-pagination'
 import { DataTableViewOptions } from '@/components/data-table/data-table-view-options'
 import { withDndColumn } from '@/components/data-table/table-utils'
-import { TEnvironment } from '@/db/schema'
-import { AddEnvironmentDialog } from './add-environment-dialog'
+import { getEnvironments } from '@/db/queries/environments'
+import { useDataTable } from '@/hooks/use-data-table'
+import type { QueryKeys } from '@/types/data-table'
 import { environmentColumns } from './columns'
 
-export function DataTable({ data: initialData }: { data: TEnvironment[] }) {
-    const [data, setData] = React.useState(() => initialData)
+interface EnvironmentTableProps {
+    promises: Promise<[Awaited<ReturnType<typeof getEnvironments>>]>
+    queryKeys?: Partial<QueryKeys>
+}
+
+export function EnvironmentDataTable({ promises, queryKeys }: EnvironmentTableProps) {
     const columns = withDndColumn(environmentColumns)
-    const table = useDataTableInstance({ data, columns, getRowId: (row) => row.id.toString() })
+    const [{ data, pageCount }] = React.use(promises)
+
+    const { table } = useDataTable({
+        data,
+        columns,
+        pageCount,
+        queryKeys,
+        initialState: {
+            sorting: [{ id: 'createdAt', desc: true }],
+            columnPinning: { right: ['actions'] },
+        },
+        getRowId: (row) => row.id,
+        shallow: false,
+        clearOnDefault: true,
+    })
 
     return (
         <Tabs defaultValue="outline" className="w-full flex-col justify-start gap-6">
@@ -57,14 +76,11 @@ export function DataTable({ data: initialData }: { data: TEnvironment[] }) {
                         <Plus />
                         <span className="hidden lg:inline">Add Section</span>
                     </Button>
-                    <Button variant="outline" size="sm" asChild>
-                        <AddEnvironmentDialog />
-                    </Button>
                 </div>
             </div>
             <TabsContent value="outline" className="relative flex flex-col gap-4 overflow-auto">
                 <div className="overflow-hidden rounded-lg border">
-                    <DataTableNew dndEnabled table={table} columns={columns} onReorder={setData} />
+                    <DataTable table={table} columns={columns} />
                 </div>
                 <DataTablePagination table={table} />
             </TabsContent>
