@@ -2,6 +2,7 @@ import 'server-only'
 
 import { db } from '@/db'
 import { designs } from '@/db/schema'
+import { designInsertSchema, TDesignInsertSchema } from '@/db/schemas/design'
 import { count } from 'drizzle-orm'
 import { paginationParams } from './pagination'
 
@@ -32,4 +33,10 @@ export async function getDesigns(input: GetDesignsSchema) {
     } catch {
         return { data: [], pageCount: 0 }
     }
+}
+
+export const insertDesign = async (input: TDesignInsertSchema) => {
+    const parsed = await designInsertSchema.parseAsync(input)
+    const result = await db.insert(designs).values(parsed).returning()
+    return result[0]
 }

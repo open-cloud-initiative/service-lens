@@ -1,4 +1,5 @@
 import type { SQL } from 'drizzle-orm'
+import type z from 'zod'
 
 export type Prettify<T> = {
     [K in keyof T]: T[K]
@@ -15,4 +16,11 @@ export interface QueryBuilderOpts {
     orderBy?: SQL
     distinct?: boolean
     nullish?: boolean
+}
+
+export type ZodTreeifyError<T> = ReturnType<typeof z.treeifyError<T>>
+export type ZodFormState<T> = {
+    values?: z.infer<T>
+    errors?: ZodTreeifyError<T>
+    success: boolean
 }

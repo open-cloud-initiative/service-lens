@@ -13,8 +13,6 @@
     "generate": "npm run generate:graphql",
     "generate:presets": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' src/scripts/generate-theme-presets.ts",
     "generate:graphql": "graphql-codegen --config ./codegen.ts",
-    "generate:migration": "npm run sequelize -- migration:generate --name",
-    "postinstall": "dotenv npm run db:migrate",
     "db:generate": "dotenv drizzle-kit generate",
     "db:introspect": "dotenv drizzle-kit introspect",
     "db:push": "dotenv drizzle-kit push",

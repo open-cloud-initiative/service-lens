@@ -33,7 +33,8 @@ export const designRelations = relations(designs, ({ many }) => ({
 }))
 
 export const designInsertSchema = createInsertSchema(designs, {
-    title: (schema) => schema.min(1, 'Title is required').max(255, 'Title must be at most 255 characters'),
+    title: (schema) =>
+        schema.min(5, 'Title must be at least 5 characters').max(255, 'Title must be at most 255 characters'),
     body: (schema) => schema.optional(),
     description: (schema) => schema.max(1024, 'Description must be at most 1024 characters').optional(),
 }).pick({
@@ -42,3 +43,6 @@ export const designInsertSchema = createInsertSchema(designs, {
     description: true,
 })
 export const designSelectSchema = createSelectSchema(designs)
+
+export type TDesignInsertSchema = ReturnType<typeof designInsertSchema.parse>
+export type TDesignSelectSchema = ReturnType<typeof designSelectSchema.parse>
