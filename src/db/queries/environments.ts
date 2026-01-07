@@ -1,8 +1,16 @@
 import 'server-only'
 
 import { db } from '@/db'
-import { designs, environmentInsertSchema, environments, TEnvironmentInsertSchema } from '@/db/schema'
-import { count } from 'drizzle-orm'
+import {
+    designs,
+    environmentDeleteSchema,
+    environmentInsertSchema,
+    environments,
+    TEnvironmentDeleteSchema,
+    TEnvironmentInsertSchema,
+} from '@/db/schema'
+import { takeFirstOrNull } from '@/db/utils'
+import { count, eq } from 'drizzle-orm'
 import { paginationParams } from './pagination'
 
 export type getEnvironmentsSchema = ReturnType<typeof paginationParams.parse>
@@ -37,5 +45,10 @@ export async function getEnvironments(input: getEnvironmentsSchema) {
 export const insertEnvironment = async (input: TEnvironmentInsertSchema) => {
     const parsed = await environmentInsertSchema.parseAsync(input)
     const result = await db.insert(environments).values(parsed).returning()
-    return result[0]
+    return takeFirstOrNull(result)
+}
+
+export const deleteEnvironment = async (input: TEnvironmentDeleteSchema) => {
+    const parsed = await environmentDeleteSchema.parseAsync(input)
+    await db.delete(environments).where(eq(environments.id, parsed.id))
 }

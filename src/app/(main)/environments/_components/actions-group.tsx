@@ -10,7 +10,6 @@ import {
     TagIcon,
     Trash2Icon,
 } from 'lucide-react'
-import * as React from 'react'
 
 import { Button } from '@/components/ui/button'
 import { ButtonGroup } from '@/components/ui/button-group'
@@ -27,9 +26,10 @@ import {
     DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { useState } from 'react'
 
 export function ActionGroup() {
-    const [label, setLabel] = React.useState('personal')
+    const [label, setLabel] = useState('personal')
 
     return (
         <ButtonGroup>
@@ -84,7 +84,7 @@ export function ActionGroup() {
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
-                            <DropdownMenuItem variant="destructive">
+                            <DropdownMenuItem variant="destructive" asChild>
                                 <Trash2Icon />
                                 Trash
                             </DropdownMenuItem>

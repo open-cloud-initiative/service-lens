@@ -24,7 +24,7 @@ export async function createEnvironmentAction(_: AddEnvironmentModalFormState, d
         }
     }
 
-    let environment: TEnvironment
+    let environment: TEnvironment | null = null
 
     try {
         environment = await insertEnvironment(result.data)
@@ -34,5 +34,11 @@ export async function createEnvironmentAction(_: AddEnvironmentModalFormState, d
         }
     }
 
-    return redirect(`/environments/${environment.id}`)
+    if (!environment) {
+        return {
+            success: false,
+        }
+    }
+
+    return redirect(`/environments/${environment?.id}`)
 }

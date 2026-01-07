@@ -40,7 +40,16 @@ export const environmentInsertSchema = createInsertSchema(environments, {
     description: true,
 })
 
-export const environmentSelectSchema = createSelectSchema(environments)
+export const environmentSelectSchema = createSelectSchema(environments).pick({
+    id: true,
+    name: true,
+    description: true,
+})
+
+export const environmentDeleteSchema = createSelectSchema(environments).pick({
+    id: true,
+})
 
 export type TEnvironmentInsertSchema = ReturnType<typeof environmentInsertSchema.parse>
 export type TEnvironmentSelectSchema = ReturnType<typeof environmentSelectSchema.parse>
+export type TEnvironmentDeleteSchema = ReturnType<typeof environmentDeleteSchema.parse>
