@@ -10,8 +10,9 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Input } from '@/components/ui/input'
 import { Row } from '@tanstack/react-table'
-import { EllipsisVertical, Trash2Icon } from 'lucide-react'
+import { EllipsisVertical, Trash2Icon, PenIcon } from 'lucide-react'
 import Form from 'next/form'
+import Link from 'next/link'
 import { useActionState } from 'react'
 import { deleteDesignAction } from './data-rows-actions.action'
 
@@ -36,7 +37,12 @@ export function DataTableRowActions<TDesign>({ row }: DataTableRowActionsProps<T
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-32">
-                <DropdownMenuItem>Edit</DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                    <Link href={`/designs/${row.id}/edit`}>
+                        <PenIcon />
+                        Edit
+                    </Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem>Make a copy</DropdownMenuItem>
                 <DropdownMenuItem>Favorite</DropdownMenuItem>
                 <DropdownMenuSeparator />
