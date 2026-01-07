@@ -18,6 +18,7 @@ import { withDndColumn } from '@/components/data-table/table-utils'
 import { getEnvironments } from '@/db/queries/environments'
 import { useDataTable } from '@/hooks/use-data-table'
 import type { QueryKeys } from '@/types/data-table'
+import { AddEnvironmentModal } from './add-environment-modal'
 import { environmentColumns } from './columns'
 
 interface EnvironmentTableProps {
@@ -76,10 +77,7 @@ export function EnvironmentDataTable({ promises, queryKeys }: EnvironmentTablePr
                         <Plus />
                         <span className="hidden lg:inline">Add Section</span>
                     </Button>
-                    <Button variant="default" size="sm">
-                        <Plus />
-                        <span className="hidden lg:inline">Add Environment</span>
-                    </Button>
+                    <AddEnvironmentModal />
                 </div>
             </div>
             <TabsContent value="outline" className="relative flex flex-col gap-4 overflow-auto">

@@ -1,7 +1,7 @@
 import 'server-only'
 
 import { db } from '@/db'
-import { designs, environments } from '@/db/schema'
+import { designs, environmentInsertSchema, environments, TEnvironmentInsertSchema } from '@/db/schema'
 import { count } from 'drizzle-orm'
 import { paginationParams } from './pagination'
 
@@ -32,4 +32,10 @@ export async function getEnvironments(input: getEnvironmentsSchema) {
     } catch {
         return { data: [], pageCount: 0 }
     }
+}
+
+export const insertEnvironment = async (input: TEnvironmentInsertSchema) => {
+    const parsed = await environmentInsertSchema.parseAsync(input)
+    const result = await db.insert(environments).values(parsed).returning()
+    return result[0]
 }

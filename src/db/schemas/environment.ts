@@ -41,3 +41,6 @@ export const environmentInsertSchema = createInsertSchema(environments, {
 })
 
 export const environmentSelectSchema = createSelectSchema(environments)
+
+export type TEnvironmentInsertSchema = ReturnType<typeof environmentInsertSchema.parse>
+export type TEnvironmentSelectSchema = ReturnType<typeof environmentSelectSchema.parse>

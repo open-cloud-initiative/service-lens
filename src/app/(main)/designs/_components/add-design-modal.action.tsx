@@ -2,12 +2,10 @@
 
 import { insertDesign } from '@/db/queries/designs'
 import { designInsertSchema, TDesign } from '@/db/schemas/design'
-import { ZodFormState } from '@/types'
 import { redirect } from 'next/navigation'
 import 'server-only'
 import { z } from 'zod'
-
-export type AddDesignFormState = ZodFormState<typeof designInsertSchema> | null
+import { AddDesignFormState } from './add-design-modal.schema'
 
 export async function createDesignAction(_: AddDesignFormState, data: FormData) {
     const values = {
