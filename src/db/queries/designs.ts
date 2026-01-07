@@ -2,8 +2,8 @@ import 'server-only'
 
 import { db } from '@/db'
 import { designs } from '@/db/schema'
-import { designInsertSchema, TDesignInsertSchema } from '@/db/schemas/design'
-import { count } from 'drizzle-orm'
+import { designInsertSchema, designDeleteSchema, TDesignInsertSchema, TDesignDeleteSchema } from '@/db/schemas/design'
+import { count, eq } from 'drizzle-orm'
 import { paginationParams } from './pagination'
 
 export type GetDesignsSchema = ReturnType<typeof paginationParams.parse>
@@ -39,4 +39,9 @@ export const insertDesign = async (input: TDesignInsertSchema) => {
     const parsed = await designInsertSchema.parseAsync(input)
     const result = await db.insert(designs).values(parsed).returning()
     return result[0]
+}
+
+export const deleteDesign = async (input: TDesignDeleteSchema) => {
+    const parsed = await designDeleteSchema.parseAsync(input)
+    await db.delete(designs).where(eq(designs.id, parsed.id))
 }

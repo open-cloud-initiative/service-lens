@@ -44,5 +44,10 @@ export const designInsertSchema = createInsertSchema(designs, {
 })
 export const designSelectSchema = createSelectSchema(designs)
 
+export const designDeleteSchema = createSelectSchema(designs).pick({
+    id: true,
+})
+
 export type TDesignInsertSchema = ReturnType<typeof designInsertSchema.parse>
 export type TDesignSelectSchema = ReturnType<typeof designSelectSchema.parse>
+export type TDesignDeleteSchema = ReturnType<typeof designDeleteSchema.parse>
