@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Separator } from '@/components/ui/separator'
 import { findEnvironmentById } from '@/db/services/environments'
 import { notFound } from 'next/navigation'
+import { Breadcrumbs } from '../_components/breadcrumbs'
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params
@@ -18,6 +19,10 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
     return (
         <div className="@container/main flex flex-col gap-4 md:gap-6">
+            {/* Navigation */}
+            <Breadcrumbs environment={environment} />
+
+            {/* Title */}
             <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight text-balance">{environment.name}</h1>
 
             <Card>

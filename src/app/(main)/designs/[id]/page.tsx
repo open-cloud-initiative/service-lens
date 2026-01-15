@@ -3,10 +3,11 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { getDesignById } from '@/db/queries/designs'
-import { ArrowLeftIcon, CalendarIcon, ClockIcon, EditIcon, TrashIcon, UserIcon } from 'lucide-react'
+import { CalendarIcon, ClockIcon, EditIcon, TrashIcon, UserIcon } from 'lucide-react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import ReactMarkdown from 'react-markdown'
+import { Breadcrumbs } from '../_components/breadcrumbs'
 import { DeleteButton } from './delete-button'
 
 interface DesignPageProps {
@@ -75,27 +76,13 @@ export default async function DesignPage({ params }: DesignPageProps) {
     }
 
     return (
-        <div className="container mx-auto py-6 px-4 max-w-7xl">
+        <div className="@container/main flex flex-col gap-4 md:gap-6">
             {/* Navigation */}
-            <div className="flex items-center gap-2 mb-6">
-                <Button variant="ghost" size="sm" asChild>
-                    <Link href="/designs" className="flex items-center gap-2">
-                        <ArrowLeftIcon className="h-4 w-4" />
-                        Back to Designs
-                    </Link>
-                </Button>
-                <span className="text-muted-foreground">•</span>
-                <span className="text-sm text-muted-foreground">Design Details</span>
-            </div>
+            <Breadcrumbs design={design} />
 
             {/* Header Section */}
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6 mb-8">
                 <div className="flex-1">
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
-                        <span>Design</span>
-                        <span>•</span>
-                        <span>ID: {design.id}</span>
-                    </div>
                     <h1 className="text-4xl font-bold tracking-tight mb-2">{design.title}</h1>
                     {design.description && <p className="text-lg text-muted-foreground">{design.description}</p>}
                 </div>
