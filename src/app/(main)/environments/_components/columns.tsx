@@ -37,7 +37,7 @@ export const environmentColumns: ColumnDef<TEnvironment>[] = [
             // return <TableCellViewer item={row.original} />
             return (
                 <Button variant="link" className="w-fit px-0 text-left text-foreground" asChild>
-                    <Link href={`/names/${row.original.id}`}>{row.original.name}</Link>
+                    <Link href={`/environments/${row.original.id}`}>{row.original.name}</Link>
                 </Button>
             )
         },

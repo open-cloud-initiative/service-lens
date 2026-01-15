@@ -5,7 +5,6 @@ import * as React from 'react'
 
 import { Plus } from 'lucide-react'
 
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -45,31 +44,25 @@ export function EnvironmentDataTable({ promises, queryKeys }: EnvironmentTablePr
     })
 
     return (
-        <Tabs defaultValue="outline" className="w-full flex-col justify-start gap-6">
+        <Tabs defaultValue="all" className="w-full flex-col justify-start gap-6">
             <div className="flex items-center justify-between">
                 <Label htmlFor="view-selector" className="sr-only">
                     View
                 </Label>
-                <Select defaultValue="outline">
+                <Select defaultValue="all">
                     <SelectTrigger className="flex @4xl/main:hidden w-fit" size="sm" id="view-selector">
                         <SelectValue placeholder="Select a view" />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="outline">Outline</SelectItem>
-                        <SelectItem value="past-performance">Past Performance</SelectItem>
-                        <SelectItem value="key-personnel">Key Personnel</SelectItem>
-                        <SelectItem value="focus-documents">Focus Documents</SelectItem>
+                        <SelectItem value="all">All</SelectItem>
+                    </SelectContent>
+                    <SelectContent>
+                        <SelectItem value="recent">Most Recent</SelectItem>
                     </SelectContent>
                 </Select>
                 <TabsList className="@4xl/main:flex hidden **:data-[slot=badge]:size-5 **:data-[slot=badge]:rounded-full **:data-[slot=badge]:bg-muted-foreground/30 **:data-[slot=badge]:px-1">
-                    <TabsTrigger value="outline">Outline</TabsTrigger>
-                    <TabsTrigger value="past-performance">
-                        Past Performance <Badge variant="secondary">3</Badge>
-                    </TabsTrigger>
-                    <TabsTrigger value="key-personnel">
-                        Key Personnel <Badge variant="secondary">2</Badge>
-                    </TabsTrigger>
-                    <TabsTrigger value="focus-documents">Focus Documents</TabsTrigger>
+                    <TabsTrigger value="all">All</TabsTrigger>
+                    <TabsTrigger value="recent">Most Recent</TabsTrigger>
                 </TabsList>
                 <div className="flex items-center gap-2">
                     <DataTableViewOptions table={table} />
@@ -80,20 +73,11 @@ export function EnvironmentDataTable({ promises, queryKeys }: EnvironmentTablePr
                     <AddEnvironmentModal />
                 </div>
             </div>
-            <TabsContent value="outline" className="relative flex flex-col gap-4 overflow-auto">
+            <TabsContent value="all" className="relative flex flex-col gap-4 overflow-auto">
                 <div className="overflow-hidden rounded-lg border">
                     <DataTable table={table} columns={columns} />
                 </div>
                 <DataTablePagination table={table} />
-            </TabsContent>
-            <TabsContent value="past-performance" className="flex flex-col">
-                <div className="aspect-video w-full flex-1 rounded-lg border border-dashed" />
-            </TabsContent>
-            <TabsContent value="key-personnel" className="flex flex-col">
-                <div className="aspect-video w-full flex-1 rounded-lg border border-dashed" />
-            </TabsContent>
-            <TabsContent value="focus-documents" className="flex flex-col">
-                <div className="aspect-video w-full flex-1 rounded-lg border border-dashed" />
             </TabsContent>
         </Tabs>
     )

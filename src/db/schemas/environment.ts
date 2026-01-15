@@ -40,12 +40,7 @@ export const environmentInsertSchema = createInsertSchema(environments, {
     description: true,
 })
 
-export const environmentSelectSchema = createSelectSchema(environments).pick({
-    id: true,
-    name: true,
-    description: true,
-})
-
+export const environmentSelectSchema = createSelectSchema(environments)
 export const environmentDeleteSchema = createSelectSchema(environments).pick({
     id: true,
 })
