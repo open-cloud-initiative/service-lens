@@ -2,7 +2,6 @@ import 'server-only'
 
 import { db } from '@/db'
 import {
-    designs,
     environmentDeleteSchema,
     environmentInsertSchema,
     environments,
@@ -25,7 +24,7 @@ export async function getEnvironments(input: getEnvironmentsSchema) {
                 .select({
                     count: count(),
                 })
-                .from(designs)
+                .from(environments)
                 .execute()
                 .then((res) => res[0]?.count ?? 0)
 

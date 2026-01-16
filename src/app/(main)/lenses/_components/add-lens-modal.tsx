@@ -146,9 +146,6 @@ export function AddLensModal() {
                                 </FormItem>
                             )}
                         />
-                        <Button type="submit" className="mt-4">
-                            Submit
-                        </Button>
                     </form>
                 </Form>
                 <DialogFooter>
