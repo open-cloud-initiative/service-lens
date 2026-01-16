@@ -1,6 +1,5 @@
 import {
     AirVent,
-    BookDashed,
     DraftingCompass,
     Dumbbell,
     Glasses,
@@ -53,11 +52,6 @@ export const sidebarItems: NavGroup[] = [
                 url: '/designs',
                 icon: PencilRuler,
             },
-            {
-                title: 'Templates',
-                url: '/template',
-                icon: BookDashed,
-            },
         ],
     },
     {
@@ -74,7 +68,7 @@ export const sidebarItems: NavGroup[] = [
                 title: 'Lenses',
                 url: '/lenses',
                 icon: Glasses,
-                comingSoon: true,
+                comingSoon: false,
             },
             {
                 title: 'Environments',
