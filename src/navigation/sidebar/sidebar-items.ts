@@ -80,7 +80,7 @@ export const sidebarItems: NavGroup[] = [
                 title: 'Profiles',
                 url: '/profiles',
                 icon: DraftingCompass,
-                comingSoon: true,
+                comingSoon: false,
             },
         ],
     },
