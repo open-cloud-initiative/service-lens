@@ -85,7 +85,7 @@ export function AddLensModal() {
             <DialogTrigger asChild>
                 <Button size="sm" variant="default">
                     <Plus />
-                    <span>Add Lens</span>
+                    <span>Add Profile</span>
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-sm">

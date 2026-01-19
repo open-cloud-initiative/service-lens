@@ -141,6 +141,14 @@ Generate database migrations.
 npm run dev
 ```
 
+Seed the database
+
+```bash
+npm run db:seed
+```
+
+The demo user is `indy@jones.com` with password `password123` and can be used test the features.
+
 ## License
 
 [MIT](/LICENSE)
