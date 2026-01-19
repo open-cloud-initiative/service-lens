@@ -17,7 +17,7 @@ import { withDndColumn } from '@/components/data-table/table-utils'
 import { getProfiles } from '@/db/queries/profiles'
 import { useDataTable } from '@/hooks/use-data-table'
 import type { QueryKeys } from '@/types/data-table'
-import { AddLensModal } from './add-lens-modal'
+import { AddProfileModal } from './add-profile-modal'
 import { profileColumns } from './columns'
 
 interface ProfileTableProps {
@@ -70,7 +70,7 @@ export function ProfileDataTable({ promises, queryKeys }: ProfileTableProps) {
                         <Plus />
                         <span className="hidden lg:inline">Add Section</span>
                     </Button>
-                    <AddLensModal />
+                    <AddProfileModal />
                 </div>
             </div>
             <TabsContent value="all" className="relative flex flex-col gap-4 overflow-auto">

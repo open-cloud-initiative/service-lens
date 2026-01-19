@@ -1,13 +1,13 @@
 'use server'
 
-import { insertEnvironment } from '@/db/queries/environments'
-import { environmentInsertSchema, TEnvironment } from '@/db/schema'
+import { insertProfile } from '@/db/queries/profiles'
+import { environmentInsertSchema, TProfile } from '@/db/schema'
 import { redirect } from 'next/navigation'
 import 'server-only'
 import { z } from 'zod'
-import { AddEnvironmentModalFormState } from './add-lens-modal.schema'
+import { AddProfileModalFormState } from './add-profile-modal.schema'
 
-export async function createEnvironmentAction(_: AddEnvironmentModalFormState, data: FormData) {
+export async function createProfileAction(_: AddProfileModalFormState, data: FormData) {
     const values = {
         name: data.get('name') as string,
     }
@@ -24,21 +24,21 @@ export async function createEnvironmentAction(_: AddEnvironmentModalFormState, d
         }
     }
 
-    let environment: TEnvironment | null = null
+    let profile: TProfile | null = null
 
     try {
-        environment = await insertEnvironment(result.data)
+        profile = await insertProfile(result.data)
     } catch (error) {
         return {
             success: false,
         }
     }
 
-    if (!environment) {
+    if (!profile) {
         return {
             success: false,
         }
     }
 
-    return redirect(`/environments/${environment?.id}`)
+    return redirect(`/profiles/${profile?.id}`)
 }
