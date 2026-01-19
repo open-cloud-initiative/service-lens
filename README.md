@@ -125,13 +125,21 @@ Install all needed packages and migrations.
 npm i
 ```
 
+Apply the migrations.
+
+> Start the database via `docker compose up` and create a new environment `cp .env.example .env`.
+
 ```bash
-openssl rand -base64 32
+npm run db:migrate
 ```
 
 ## Development
 
 Generate database migrations.
+
+```bash
+npm run dev
+```
 
 ## License
 
