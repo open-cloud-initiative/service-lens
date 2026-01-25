@@ -5,7 +5,6 @@ import {
     Dialog,
     DialogClose,
     DialogContent,
-    DialogDescription,
     DialogFooter,
     DialogHeader,
     DialogTitle,
@@ -21,7 +20,7 @@ import {
     FileUploadList,
     FileUploadTrigger,
 } from '@/components/ui/file-upload'
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CloudUpload, Plus, X } from 'lucide-react'
 import * as React from 'react'
@@ -91,7 +90,6 @@ export function AddLensModal() {
             <DialogContent className="sm:max-w-sm">
                 <DialogHeader>
                     <DialogTitle>Create Lens</DialogTitle>
-                    <DialogDescription>Fill in the information below to create a new lens.</DialogDescription>
                 </DialogHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-md">
@@ -100,27 +98,26 @@ export function AddLensModal() {
                             name="files"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Attachments</FormLabel>
                                     <FormControl>
                                         <FileUpload
                                             value={field.value}
                                             onValueChange={field.onChange}
                                             accept="image/*"
-                                            maxFiles={2}
+                                            maxFiles={1}
                                             maxSize={5 * 1024 * 1024}
                                             onFileReject={(_, message) => {
                                                 form.setError('files', {
                                                     message,
                                                 })
                                             }}
-                                            multiple
+                                            multiple={false}
                                         >
                                             <FileUploadDropzone className="flex-row flex-wrap border-dotted text-center">
                                                 <CloudUpload className="size-4" />
                                                 Drag and drop or
                                                 <FileUploadTrigger asChild>
                                                     <Button variant="link" size="sm" className="p-0">
-                                                        choose files
+                                                        choose file
                                                     </Button>
                                                 </FileUploadTrigger>
                                                 to upload
@@ -141,7 +138,7 @@ export function AddLensModal() {
                                             </FileUploadList>
                                         </FileUpload>
                                     </FormControl>
-                                    <FormDescription>Upload up to 2 images up to 5MB each.</FormDescription>
+                                    <FormDescription>Upload a lens up to 5MB.</FormDescription>
                                     <FormMessage />
                                 </FormItem>
                             )}
