@@ -1,21 +1,25 @@
 'use server'
 
-import { insertEnvironment } from '@/db/queries/environments'
-import { environmentInsertSchema, TEnvironment } from '@/db/schema'
+import { insertLens } from '@/db/queries/lenses'
+import { lensInsertSchema, TLens } from '@/db/schema'
 import { redirect } from 'next/navigation'
 import 'server-only'
-import { z } from 'zod'
-import { AddEnvironmentModalFormState } from './add-lens-modal.schema'
+import * as z from 'zod'
+import { AddLensModalFormState } from './add-lens-modal.schema'
 
-export async function createEnvironmentAction(_: AddEnvironmentModalFormState, data: FormData) {
+export async function createLensAction(_: AddLensModalFormState, data: FormData) {
     const values = {
         name: data.get('name') as string,
-        files: data.getAll('files') as File[],
+        spec: data.get('spec') as File,
     }
 
-    console.log('Values:', values)
+    const buffer = await values.spec.arrayBuffer()
+    const lensBuffer = Buffer.from(buffer)
 
-    const result = environmentInsertSchema.safeParse(values)
+    console.log('Creating lens with name:', values.name)
+    console.log('Lens file', lensBuffer.toString())
+
+    const result = lensInsertSchema.safeParse(values)
 
     if (!result.success) {
         const errors = z.treeifyError(result.error)
@@ -27,21 +31,21 @@ export async function createEnvironmentAction(_: AddEnvironmentModalFormState, d
         }
     }
 
-    let environment: TEnvironment | null = null
+    let lens: TLens | null = null
 
     try {
-        environment = await insertEnvironment(result.data)
+        lens = await insertLens(result.data)
     } catch (error) {
         return {
             success: false,
         }
     }
 
-    if (!environment) {
+    if (!lens) {
         return {
             success: false,
         }
     }
 
-    return redirect(`/environments/${environment?.id}`)
+    return redirect(`/lenses/${lens?.id}`)
 }

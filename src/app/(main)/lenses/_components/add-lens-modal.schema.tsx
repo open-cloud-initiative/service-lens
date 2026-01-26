@@ -1,4 +1,4 @@
-import { TEnvironmentInsertSchema } from '@/db/schema'
+import { TLensInsertSchema } from '@/db/schema'
 import { ZodFormState } from '@/types'
 
-export type AddEnvironmentModalFormState = ZodFormState<TEnvironmentInsertSchema> | null
+export type AddLensModalFormState = ZodFormState<TLensInsertSchema> | null
