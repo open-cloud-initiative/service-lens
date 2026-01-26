@@ -1,14 +1,7 @@
 import 'server-only'
 
 import { db } from '@/db'
-import {
-    environmentDeleteSchema,
-    environmentInsertSchema,
-    environments,
-    lenses,
-    TEnvironmentDeleteSchema,
-    TEnvironmentInsertSchema,
-} from '@/db/schema'
+import { lensDeleteSchema, lenses, lensInsertSchema, TLensDeleteSchema, TLensInsertSchema } from '@/db/schema'
 import { takeFirstOrNull } from '@/db/utils'
 import { count, eq } from 'drizzle-orm'
 import { paginationParams } from './pagination'
@@ -42,13 +35,13 @@ export async function getLenses(input: getLensesSchema) {
     }
 }
 
-export const insertEnvironment = async (input: TEnvironmentInsertSchema) => {
-    const parsed = await environmentInsertSchema.parseAsync(input)
-    const result = await db.insert(environments).values(parsed).returning()
+export const insertLens = async (input: TLensInsertSchema) => {
+    const parsed = await lensInsertSchema.parseAsync(input)
+    const result = await db.insert(lenses).values(parsed).returning()
     return takeFirstOrNull(result)
 }
 
-export const deleteEnvironment = async (input: TEnvironmentDeleteSchema) => {
-    const parsed = await environmentDeleteSchema.parseAsync(input)
-    await db.delete(environments).where(eq(environments.id, parsed.id))
+export const deleteLens = async (input: TLensDeleteSchema) => {
+    const parsed = await lensDeleteSchema.parseAsync(input)
+    await db.delete(lenses).where(eq(lenses.id, parsed.id))
 }

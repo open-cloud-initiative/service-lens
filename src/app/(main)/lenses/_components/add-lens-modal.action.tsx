@@ -10,7 +10,10 @@ import { AddEnvironmentModalFormState } from './add-lens-modal.schema'
 export async function createEnvironmentAction(_: AddEnvironmentModalFormState, data: FormData) {
     const values = {
         name: data.get('name') as string,
+        files: data.getAll('files') as File[],
     }
+
+    console.log('Values:', values)
 
     const result = environmentInsertSchema.safeParse(values)
 

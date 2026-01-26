@@ -20,6 +20,7 @@ export const lensInsertSchema = createInsertSchema(lenses, {
     name: (schema) => schema.min(1, 'Name is required').max(255, 'Name must be at most 255 characters'),
 }).pick({
     name: true,
+    raw: true,
 })
 
 export const lensSelectSchema = createSelectSchema(lenses)

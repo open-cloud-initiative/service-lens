@@ -92,7 +92,7 @@ export function AddLensModal() {
                     <DialogTitle>Create Lens</DialogTitle>
                 </DialogHeader>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-md">
+                    <form action={formAction} className="w-full max-w-md">
                         <FormField
                             control={form.control}
                             name="files"
