@@ -2,7 +2,7 @@ import 'server-only'
 
 import { db } from '@/db'
 import { profiles } from '@/db/schema'
-import type { TProfileDeleteSchema, TProfileInsertSchema } from '@/db/schemas/profile'
+import type { TProfile, TProfileDeleteSchema, TProfileInsertSchema } from '@/db/schemas/profile'
 import { profileDeleteSchema, profileInsertSchema } from '@/db/schemas/profile'
 import { takeFirstOrNull } from '@/db/utils'
 import { count, eq } from 'drizzle-orm'
@@ -46,4 +46,13 @@ export const insertProfile = async (input: TProfileInsertSchema) => {
 export const deleteProfile = async (input: TProfileDeleteSchema) => {
     const parsed = await profileDeleteSchema.parseAsync(input)
     await db.delete(profiles).where(eq(profiles.id, parsed.id))
+}
+
+export const getProfileById = async (id: string): Promise<TProfile | null> => {
+    try {
+        const result = await db.select().from(profiles).where(eq(profiles.id, id)).limit(1)
+        return result[0] || null
+    } catch {
+        return null
+    }
 }

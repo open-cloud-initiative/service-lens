@@ -6,6 +6,7 @@ import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 export const profiles = pgTable('profile', {
     id: uuid().primaryKey().defaultRandom(),
     name: varchar({ length: 255 }).notNull(),
+    description: varchar({ length: 1024 }),
     createdAt: timestamp('created_at').defaultNow(),
     updatedAt: timestamp('updated_at')
         .defaultNow()

@@ -7,12 +7,12 @@ import { Team } from '@/db/models/teams'
 import { z } from 'zod'
 import { Ownership } from '../models/ownership'
 import {
-  CreateProfileSchema,
-  DestroyProfileSchema,
-  FindAllProfilesQuestionsSchema,
-  FindAndCountProfilesSchema,
-  FindOneProfileSchema,
-  ListProfileByTeamSlug,
+    CreateProfileSchema,
+    DestroyProfileSchema,
+    FindAllProfilesQuestionsSchema,
+    FindAndCountProfilesSchema,
+    FindOneProfileSchema,
+    ListProfileByTeamSlug,
 } from '../schemas/profiles'
 
 export type Pagination = {
