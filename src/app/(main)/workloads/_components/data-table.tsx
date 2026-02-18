@@ -17,8 +17,8 @@ import { withDndColumn } from '@/components/data-table/table-utils'
 import { getWorkloads } from '@/db/queries/workloads'
 import { useDataTable } from '@/hooks/use-data-table'
 import type { QueryKeys } from '@/types/data-table'
-import { workloadColumns } from '../../workloads/_components/columns'
-import { AddLensModal } from './add-lens-modal'
+import { AddWorkloadModal } from './add-workload-modal'
+import { workloadColumns } from './columns'
 
 interface WorkloadTableProps {
     promises: Promise<[Awaited<ReturnType<typeof getWorkloads>>]>
@@ -70,7 +70,7 @@ export function WorkloadDataTable({ promises, queryKeys }: WorkloadTableProps) {
                         <Plus />
                         <span className="hidden lg:inline">Add Section</span>
                     </Button>
-                    <AddLensModal />
+                    <AddWorkloadModal />
                 </div>
             </div>
             <TabsContent value="all" className="relative flex flex-col gap-4 overflow-auto">

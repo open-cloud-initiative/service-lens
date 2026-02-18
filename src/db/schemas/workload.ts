@@ -4,7 +4,7 @@ import { bigint, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 import { tag } from './tag'
 
-export const workload = pgTable('workload', {
+export const workloads = pgTable('workload', {
     id: uuid().primaryKey().defaultRandom(),
     name: varchar({ length: 255 }).notNull(),
     description: varchar({ length: 1024 }).notNull(),
@@ -15,23 +15,23 @@ export const workload = pgTable('workload', {
     deletedAt: timestamp('deleted_at'),
 })
 
-export type TWorkload = typeof workload.$inferSelect
-export type TNewWorkload = typeof workload.$inferInsert
+export type TWorkload = typeof workloads.$inferSelect
+export type TNewWorkload = typeof workloads.$inferInsert
 
 export const workloadTag = pgTable('workload_tag', {
     workloadId: uuid()
         .notNull()
-        .references(() => workload.id, { onDelete: 'cascade' }),
+        .references(() => workloads.id, { onDelete: 'cascade' }),
     tagId: bigint({ mode: 'bigint' })
         .notNull()
         .references(() => tag.id, { onDelete: 'cascade' }),
 })
 
-export const workloadRelations = relations(workload, ({ many }) => ({
+export const workloadRelations = relations(workloads, ({ many }) => ({
     tags: many(tag),
 }))
 
-export const workloadInsertSchema = createInsertSchema(workload, {
+export const workloadInsertSchema = createInsertSchema(workloads, {
     name: (schema) => schema.min(1, 'Name is required').max(255, 'Name must be at most 255 characters'),
     description: (schema) =>
         schema.min(1, 'Description is required').max(1024, 'Description must be at most 1024 characters'),
@@ -39,4 +39,12 @@ export const workloadInsertSchema = createInsertSchema(workload, {
     name: true,
     description: true,
 })
-export const workloadSelectSchema = createSelectSchema(workload)
+
+export const workloadSelectSchema = createSelectSchema(workloads)
+export const workloadDeleteSchema = createSelectSchema(workloads).pick({
+    id: true,
+})
+
+export type TWorkloadInsertSchema = ReturnType<typeof workloadInsertSchema.parse>
+export type TWorkloadSelectSchema = ReturnType<typeof workloadSelectSchema.parse>
+export type TWorkloadDeleteSchema = ReturnType<typeof workloadDeleteSchema.parse>

@@ -62,7 +62,7 @@ export const sidebarItems: NavGroup[] = [
                 title: 'Workloads',
                 url: '/workloads',
                 icon: Dumbbell,
-                comingSoon: true,
+                comingSoon: false,
             },
             {
                 title: 'Lenses',

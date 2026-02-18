@@ -16,13 +16,14 @@ export async function createLensAction(_: AddLensModalFormState, data: FormData)
     const buffer = await values.spec.arrayBuffer()
     const lensBuffer = Buffer.from(buffer)
 
-    console.log('Creating lens with name:', values.name)
-    console.log('Lens file', lensBuffer.toString())
+    console.log(lensBuffer.toJSON())
 
-    const result = lensInsertSchema.safeParse(values)
+    const result = lensInsertSchema.safeParse(lensBuffer.toJSON())
 
     if (!result.success) {
         const errors = z.treeifyError(result.error)
+
+        console.error('Validation errors:', errors)
 
         return {
             values,
