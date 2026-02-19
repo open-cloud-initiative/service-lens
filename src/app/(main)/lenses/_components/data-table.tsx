@@ -14,19 +14,19 @@ import { DataTable } from '@/components/data-table/data-table'
 import { DataTablePagination } from '@/components/data-table/data-table-pagination'
 import { DataTableViewOptions } from '@/components/data-table/data-table-view-options'
 import { withDndColumn } from '@/components/data-table/table-utils'
-import { getWorkloads } from '@/db/queries/workloads'
+import { getLenses } from '@/db/queries/lenses'
 import { useDataTable } from '@/hooks/use-data-table'
 import type { QueryKeys } from '@/types/data-table'
-import { workloadColumns } from '../../workloads/_components/columns'
 import { AddLensModal } from './add-lens-modal'
+import { lensColumns } from './columns'
 
-interface WorkloadTableProps {
-    promises: Promise<[Awaited<ReturnType<typeof getWorkloads>>]>
+interface LensTableProps {
+    promises: Promise<[Awaited<ReturnType<typeof getLenses>>]>
     queryKeys?: Partial<QueryKeys>
 }
 
-export function WorkloadDataTable({ promises, queryKeys }: WorkloadTableProps) {
-    const columns = withDndColumn(workloadColumns)
+export function LensDataTable({ promises, queryKeys }: LensTableProps) {
+    const columns = withDndColumn(lensColumns)
     const [{ data, pageCount }] = React.use(promises)
 
     const { table } = useDataTable({
