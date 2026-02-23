@@ -36,7 +36,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@graphql-codegen/client-preset": "^5.2.3",
     "@graphql-codegen/typescript": "^5.0.8",
-    "@graphql-codegen/typescript-resolvers": "^5.1.5",
+    "@graphql-codegen/typescript-resolvers": "^5.1.6",
     "@hookform/resolvers": "^5.2.2",
     "@orpc/client": "^1.13.5",
     "@orpc/openapi": "^1.13.5",
