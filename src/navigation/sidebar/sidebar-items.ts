@@ -7,6 +7,7 @@ import {
     type LucideIcon,
     PencilRuler,
     Settings,
+    Tags,
     UserCog,
     Users,
     Wrench,
@@ -88,6 +89,11 @@ export const sidebarItems: NavGroup[] = [
         id: 3,
         label: 'Misc',
         items: [
+            {
+                title: 'Tags',
+                url: '/tags',
+                icon: Tags,
+            },
             {
                 title: 'Settings',
                 url: '/settings/profile',

@@ -2,7 +2,7 @@ import { pgTable } from '@/db/utils'
 import { relations } from 'drizzle-orm'
 import { bigint, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
-import { tag } from './tag'
+import { tags } from './tag'
 
 export const designs = pgTable('design', {
     id: uuid().primaryKey().defaultRandom(),
@@ -25,11 +25,11 @@ export const designTag = pgTable('design_tag', {
         .references(() => designs.id, { onDelete: 'cascade' }),
     tagId: bigint({ mode: 'bigint' })
         .notNull()
-        .references(() => tag.id, { onDelete: 'cascade' }),
+        .references(() => tags.id, { onDelete: 'cascade' }),
 })
 
 export const designRelations = relations(designs, ({ many }) => ({
-    tags: many(tag),
+    tags: many(tags),
 }))
 
 export const designInsertSchema = createInsertSchema(designs, {

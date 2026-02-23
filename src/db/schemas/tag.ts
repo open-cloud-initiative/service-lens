@@ -2,7 +2,7 @@ import { pgTable } from '@/db/utils'
 import { bigint, index, timestamp, uniqueIndex, varchar } from 'drizzle-orm/pg-core'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 
-export const tag = pgTable(
+export const tags = pgTable(
     'tag',
     {
         id: bigint({ mode: 'bigint' }).primaryKey(),
@@ -20,14 +20,21 @@ export const tag = pgTable(
     ],
 )
 
-export type TTag = typeof tag.$inferSelect
-export type TNewTag = typeof tag.$inferInsert
+export type TTag = typeof tags.$inferSelect
+export type TNewTag = typeof tags.$inferInsert
 
-export const tagInsertSchema = createInsertSchema(tag, {
+export const tagInsertSchema = createInsertSchema(tags, {
     name: (schema) => schema.min(1, 'Name is required').max(255, 'Name must be at most 255 characters'),
     value: (schema) => schema.min(1, 'Value is required').max(1024, 'Value must be at most 1024 characters'),
 }).pick({
     name: true,
     value: true,
 })
-export const tagSelectSchema = createSelectSchema(tag)
+export const tagSelectSchema = createSelectSchema(tags)
+export const tagDeleteSchema = createSelectSchema(tags).pick({
+    id: true,
+})
+
+export type TTagInsertSchema = ReturnType<typeof tagInsertSchema.parse>
+export type TTagSelectSchema = ReturnType<typeof tagSelectSchema.parse>
+export type TTagDeleteSchema = ReturnType<typeof tagDeleteSchema.parse>
