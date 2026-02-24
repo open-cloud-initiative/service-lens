@@ -11,14 +11,14 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog'
-import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
+import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { Plus } from 'lucide-react'
 import Form from 'next/form'
 import { useActionState } from 'react'
-import { createProfileAction } from './add-profile-modal.action'
+import { createProfileAction } from './add-tag-modal.action'
 
-export function AddProfileModal() {
+export function AddTageModal() {
     const [state, formAction, pending] = useActionState(createProfileAction, null)
 
     return (
@@ -26,15 +26,15 @@ export function AddProfileModal() {
             <DialogTrigger asChild>
                 <Button size="sm" variant="default">
                     <Plus />
-                    <span>Add Profile</span>
+                    <span>Add Tag</span>
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-sm">
                 <DialogHeader>
-                    <DialogTitle>Create Profile</DialogTitle>
-                    <DialogDescription>Fill in the information below to create a new profile.</DialogDescription>
+                    <DialogTitle>Create Tag</DialogTitle>
+                    <DialogDescription>Fill in the information below to create a new tag.</DialogDescription>
                 </DialogHeader>
-                <Form action={formAction} id="add-profile-form">
+                <Form action={formAction} id="add-tag-form">
                     <FieldGroup>
                         <Field data-invalid={!!state?.errors?.properties?.name}>
                             <FieldLabel htmlFor="name">Name</FieldLabel>
@@ -43,10 +43,23 @@ export function AddProfileModal() {
                                 name="name"
                                 defaultValue={state?.values?.name}
                                 disabled={pending}
+                                placeholder="Dig"
+                                autoComplete="off"
+                            />
+                            {state?.errors?.properties?.name && (
+                                <FieldError>{state?.errors?.properties?.name.errors.pop()}</FieldError>
+                            )}
+                        </Field>
+                        <Field data-invalid={!!state?.errors?.properties?.name}>
+                            <FieldLabel htmlFor="name">Value</FieldLabel>
+                            <Input
+                                id="name"
+                                name="name"
+                                defaultValue={state?.values?.name}
+                                disabled={pending}
                                 placeholder="Atlantis"
                                 autoComplete="off"
                             />
-                            <FieldDescription>Provide a concise name for the profile.</FieldDescription>
                             {state?.errors?.properties?.name && (
                                 <FieldError>{state?.errors?.properties?.name.errors.pop()}</FieldError>
                             )}

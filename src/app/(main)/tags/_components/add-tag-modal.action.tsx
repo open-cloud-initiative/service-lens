@@ -5,7 +5,7 @@ import { environmentInsertSchema, TProfile } from '@/db/schema'
 import { redirect } from 'next/navigation'
 import 'server-only'
 import { z } from 'zod'
-import { AddProfileModalFormState } from './add-profile-modal.schema'
+import { AddProfileModalFormState } from './add-tag-modal.schema'
 
 export async function createProfileAction(_: AddProfileModalFormState, data: FormData) {
     const values = {

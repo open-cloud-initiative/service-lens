@@ -14,19 +14,19 @@ import { DataTable } from '@/components/data-table/data-table'
 import { DataTablePagination } from '@/components/data-table/data-table-pagination'
 import { DataTableViewOptions } from '@/components/data-table/data-table-view-options'
 import { withDndColumn } from '@/components/data-table/table-utils'
-import { getProfiles } from '@/db/queries/profiles'
+import { getTags } from '@/db/queries/tags'
 import { useDataTable } from '@/hooks/use-data-table'
 import type { QueryKeys } from '@/types/data-table'
-import { AddProfileModal } from './add-profile-modal'
-import { profileColumns } from './columns'
+import { AddTageModal } from './add-tag-modal'
+import { tagsColumns } from './columns'
 
-interface ProfileTableProps {
-    promises: Promise<[Awaited<ReturnType<typeof getProfiles>>]>
+interface TagsTableProps {
+    promises: Promise<[Awaited<ReturnType<typeof getTags>>]>
     queryKeys?: Partial<QueryKeys>
 }
 
-export function ProfileDataTable({ promises, queryKeys }: ProfileTableProps) {
-    const columns = withDndColumn(profileColumns)
+export function TagsDataTable({ promises, queryKeys }: TagsTableProps) {
+    const columns = withDndColumn(tagsColumns)
     const [{ data, pageCount }] = React.use(promises)
 
     const { table } = useDataTable({
@@ -38,7 +38,7 @@ export function ProfileDataTable({ promises, queryKeys }: ProfileTableProps) {
             sorting: [{ id: 'createdAt', desc: true }],
             columnPinning: { right: ['actions'] },
         },
-        getRowId: (row) => row.id,
+        getRowId: (row) => row.name,
         shallow: false,
         clearOnDefault: true,
     })
@@ -70,7 +70,7 @@ export function ProfileDataTable({ promises, queryKeys }: ProfileTableProps) {
                         <Plus />
                         <span className="hidden lg:inline">Add Section</span>
                     </Button>
-                    <AddProfileModal />
+                    <AddTageModal />
                 </div>
             </div>
             <TabsContent value="all" className="relative flex flex-col gap-4 overflow-auto">
