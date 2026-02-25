@@ -1,21 +1,24 @@
 'use server'
 
-import { insertProfile } from '@/db/queries/profiles'
-import { environmentInsertSchema, TProfile } from '@/db/schema'
+import { insertTag } from '@/db/queries/tags'
+import { tagInsertSchema, TTag } from '@/db/schema'
 import { redirect } from 'next/navigation'
 import 'server-only'
 import { z } from 'zod'
-import { AddProfileModalFormState } from './add-tag-modal.schema'
+import { AddTagModalFormState } from './add-tag-modal.schema'
 
-export async function createProfileAction(_: AddProfileModalFormState, data: FormData) {
+export async function createTagAction(_: AddTagModalFormState, data: FormData) {
     const values = {
         name: data.get('name') as string,
+        value: data.get('value') as string,
     }
 
-    const result = environmentInsertSchema.safeParse(values)
+    const result = tagInsertSchema.safeParse(values)
 
     if (!result.success) {
         const errors = z.treeifyError(result.error)
+
+        console.error('Validation errors:', errors.properties?.value?.errors)
 
         return {
             values,
@@ -24,21 +27,23 @@ export async function createProfileAction(_: AddProfileModalFormState, data: For
         }
     }
 
-    let profile: TProfile | null = null
+    let tag: TTag | null = null
 
     try {
-        profile = await insertProfile(result.data)
+        tag = await insertTag(result.data)
     } catch (error) {
+        console.error('Error inserting tag:', error)
+
         return {
             success: false,
         }
     }
 
-    if (!profile) {
+    if (!tag) {
         return {
             success: false,
         }
     }
 
-    return redirect(`/profiles/${profile?.id}`)
+    return redirect(`/tags/${tag?.id}`)
 }

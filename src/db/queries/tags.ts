@@ -46,7 +46,7 @@ export const deleteTag = async (input: TTagDeleteSchema) => {
     await db.delete(tags).where(eq(tags.id, parsed.id))
 }
 
-export const getTagById = async (id: string): Promise<TTag | null> => {
+export const getTagById = async (id: number): Promise<TTag | null> => {
     try {
         const result = await db.select().from(tags).where(eq(tags.id, id)).limit(1)
         return result[0] || null

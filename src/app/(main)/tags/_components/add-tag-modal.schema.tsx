@@ -1,4 +1,4 @@
-import { TProfileInsertSchema } from '@/db/schema'
+import { TTagInsertSchema } from '@/db/schema'
 import { ZodFormState } from '@/types'
 
-export type AddProfileModalFormState = ZodFormState<TProfileInsertSchema> | null
+export type AddTagModalFormState = ZodFormState<TTagInsertSchema> | null

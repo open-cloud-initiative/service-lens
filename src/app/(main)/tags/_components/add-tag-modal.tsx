@@ -16,10 +16,10 @@ import { Input } from '@/components/ui/input'
 import { Plus } from 'lucide-react'
 import Form from 'next/form'
 import { useActionState } from 'react'
-import { createProfileAction } from './add-tag-modal.action'
+import { createTagAction } from './add-tag-modal.action'
 
-export function AddTageModal() {
-    const [state, formAction, pending] = useActionState(createProfileAction, null)
+export function AddTagModal() {
+    const [state, formAction, pending] = useActionState(createTagAction, null)
 
     return (
         <Dialog>
@@ -50,18 +50,18 @@ export function AddTageModal() {
                                 <FieldError>{state?.errors?.properties?.name.errors.pop()}</FieldError>
                             )}
                         </Field>
-                        <Field data-invalid={!!state?.errors?.properties?.name}>
-                            <FieldLabel htmlFor="name">Value</FieldLabel>
+                        <Field data-invalid={!!state?.errors?.properties?.value}>
+                            <FieldLabel htmlFor="value">Value</FieldLabel>
                             <Input
-                                id="name"
-                                name="name"
-                                defaultValue={state?.values?.name}
+                                id="value"
+                                name="value"
+                                defaultValue={state?.values?.value}
                                 disabled={pending}
                                 placeholder="Atlantis"
                                 autoComplete="off"
                             />
-                            {state?.errors?.properties?.name && (
-                                <FieldError>{state?.errors?.properties?.name.errors.pop()}</FieldError>
+                            {state?.errors?.properties?.value && (
+                                <FieldError>{state?.errors?.properties?.value.errors.pop()}</FieldError>
                             )}
                         </Field>
                     </FieldGroup>
@@ -70,7 +70,7 @@ export function AddTageModal() {
                     <DialogClose asChild>
                         <Button variant="outline">Cancel</Button>
                     </DialogClose>
-                    <Button type="submit" form="add-profile-form" disabled={pending}>
+                    <Button type="submit" form="add-tag-form" disabled={pending}>
                         Save
                     </Button>
                 </DialogFooter>

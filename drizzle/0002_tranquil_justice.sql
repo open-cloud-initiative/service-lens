@@ -1,1 +1,0 @@
-ALTER TABLE "service_lens_profile" ADD COLUMN "description" varchar(1024);

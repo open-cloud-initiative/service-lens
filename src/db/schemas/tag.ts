@@ -1,11 +1,11 @@
 import { pgTable } from '@/db/utils'
-import { bigint, index, timestamp, uniqueIndex, varchar } from 'drizzle-orm/pg-core'
+import { bigserial, index, timestamp, uniqueIndex, varchar } from 'drizzle-orm/pg-core'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 
 export const tags = pgTable(
     'tag',
     {
-        id: bigint({ mode: 'bigint' }).primaryKey(),
+        id: bigserial({ mode: 'number' }).primaryKey(),
         name: varchar({ length: 255 }).notNull(),
         value: varchar({ length: 1024 }).notNull(),
         createdAt: timestamp('created_at').defaultNow(),

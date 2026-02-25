@@ -17,7 +17,7 @@ import { withDndColumn } from '@/components/data-table/table-utils'
 import { getTags } from '@/db/queries/tags'
 import { useDataTable } from '@/hooks/use-data-table'
 import type { QueryKeys } from '@/types/data-table'
-import { AddTageModal } from './add-tag-modal'
+import { AddTagModal } from './add-tag-modal'
 import { tagsColumns } from './columns'
 
 interface TagsTableProps {
@@ -70,7 +70,7 @@ export function TagsDataTable({ promises, queryKeys }: TagsTableProps) {
                         <Plus />
                         <span className="hidden lg:inline">Add Section</span>
                     </Button>
-                    <AddTageModal />
+                    <AddTagModal />
                 </div>
             </div>
             <TabsContent value="all" className="relative flex flex-col gap-4 overflow-auto">
