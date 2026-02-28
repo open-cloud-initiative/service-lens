@@ -6,14 +6,14 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
-import { TProfile } from '@/db/schema'
+import { TTag } from '@/db/schema'
 import Link from 'next/link'
 
 export interface BreadcrumbsProps {
-    profile: TProfile
+    tag: TTag
 }
 
-export function Breadcrumbs({ profile }: BreadcrumbsProps) {
+export function Breadcrumbs({ tag }: BreadcrumbsProps) {
     return (
         <Breadcrumb>
             <BreadcrumbList>
@@ -25,12 +25,12 @@ export function Breadcrumbs({ profile }: BreadcrumbsProps) {
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
                     <BreadcrumbLink asChild>
-                        <Link href="/profiles">Profiles</Link>
+                        <Link href="/tags">Tags</Link>
                     </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                    <BreadcrumbPage>{profile.name}</BreadcrumbPage>
+                    <BreadcrumbPage>{tag.name}</BreadcrumbPage>
                 </BreadcrumbItem>
             </BreadcrumbList>
         </Breadcrumb>
