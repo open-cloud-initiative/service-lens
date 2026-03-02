@@ -2,6 +2,7 @@
 
 import { insertLens } from '@/db/queries/lenses'
 import { lensInsertSchema, TLens } from '@/db/schema'
+import { lensSpecSchema } from '@/lib/spec'
 import { redirect } from 'next/navigation'
 import 'server-only'
 import * as z from 'zod'
@@ -14,16 +15,13 @@ export async function createLensAction(_: AddLensModalFormState, data: FormData)
     }
 
     const buffer = await values.spec.arrayBuffer()
-    const lensBuffer = Buffer.from(buffer)
+    const json = new TextDecoder().decode(buffer)
+    const spec = lensSpecSchema.safeParse(JSON.parse(json))
 
-    console.log(lensBuffer.toJSON())
-
-    const result = lensInsertSchema.safeParse(lensBuffer.toJSON())
+    const result = lensInsertSchema.safeParse({raw: spec.data, name: spec.data?.name})
 
     if (!result.success) {
         const errors = z.treeifyError(result.error)
-
-        console.error('Validation errors:', errors)
 
         return {
             values,

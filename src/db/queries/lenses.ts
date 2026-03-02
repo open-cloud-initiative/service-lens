@@ -35,6 +35,15 @@ export async function getLenses(input: getLensesSchema) {
     }
 }
 
+export async function getLensById(id: string) {
+    try {
+        const lens = await db.select().from(lenses).where(eq(lenses.id, id)).execute().then(takeFirstOrNull)
+        return lens
+    } catch {
+        return null
+    }
+}
+
 export const insertLens = async (input: TLensInsertSchema) => {
     const parsed = await lensInsertSchema.parseAsync(input)
     const result = await db.insert(lenses).values(parsed).returning()

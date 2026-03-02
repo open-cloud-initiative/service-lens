@@ -18,8 +18,6 @@ export async function createTagAction(_: AddTagModalFormState, data: FormData) {
     if (!result.success) {
         const errors = z.treeifyError(result.error)
 
-        console.error('Validation errors:', errors.properties?.value?.errors)
-
         return {
             values,
             errors,
