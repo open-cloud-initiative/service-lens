@@ -37,7 +37,7 @@ export const lensColumns: ColumnDef<TLens>[] = [
             // return <TableCellViewer item={row.original} />
             return (
                 <Button variant="link" className="w-fit px-0 text-left text-foreground" asChild>
-                    <Link href={`/environments/${row.original.id}`}>{row.original.name}</Link>
+                    <Link href={`/lenses/${row.original.id}`}>{row.original.name}</Link>
                 </Button>
             )
         },
