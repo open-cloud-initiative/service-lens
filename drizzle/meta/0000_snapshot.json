@@ -1,5 +1,5 @@
 {
-  "id": "3e71c23c-d8c1-4308-9aba-115553941aa9",
+  "id": "fa934151-1cc2-4eb9-986f-ec1c1837b1ef",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -883,7 +883,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
+          "onDelete": "no action",
           "onUpdate": "no action"
         }
       },
@@ -1101,6 +1101,58 @@
       },
       "indexes": {},
       "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.service_lens_profile_lens": {
+      "name": "service_lens_profile_lens",
+      "schema": "",
+      "columns": {
+        "profileId": {
+          "name": "profileId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lensId": {
+          "name": "lensId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "service_lens_profile_lens_profileId_service_lens_profile_id_fk": {
+          "name": "service_lens_profile_lens_profileId_service_lens_profile_id_fk",
+          "tableFrom": "service_lens_profile_lens",
+          "tableTo": "service_lens_profile",
+          "columnsFrom": [
+            "profileId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "service_lens_profile_lens_lensId_service_lens_lens_id_fk": {
+          "name": "service_lens_profile_lens_lensId_service_lens_lens_id_fk",
+          "tableFrom": "service_lens_profile_lens",
+          "tableTo": "service_lens_lens",
+          "columnsFrom": [
+            "lensId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},

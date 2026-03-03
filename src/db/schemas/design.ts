@@ -25,7 +25,7 @@ export const designTag = pgTable('design_tag', {
         .references(() => designs.id, { onDelete: 'cascade' }),
     tagId: bigint({ mode: 'bigint' })
         .notNull()
-        .references(() => tags.id, { onDelete: 'cascade' }),
+        .references(() => tags.id),
 })
 
 export const designRelations = relations(designs, ({ many }) => ({

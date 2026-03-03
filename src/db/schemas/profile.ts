@@ -2,6 +2,7 @@ import { pgTable } from '@/db/utils'
 import { relations } from 'drizzle-orm'
 import { bigint, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
+import { lenses } from './lens'
 
 export const profiles = pgTable('profile', {
     id: uuid().primaryKey().defaultRandom(),
@@ -16,6 +17,23 @@ export const profiles = pgTable('profile', {
 
 export type TProfile = typeof profiles.$inferSelect
 export type TNewProfile = typeof profiles.$inferInsert
+
+export const profileLens = pgTable('profile_lens', {
+    profileId: uuid()
+        .notNull()
+        .references(() => profiles.id, { onDelete: 'cascade' }),
+    lensId: uuid()
+        .notNull()
+        .references(() => lenses.id),
+})
+
+export const profileLensRelations = relations(profileLens, ({ many, one }) => ({
+    profile: one(profiles, {
+        fields: [profileLens.profileId],
+        references: [profiles.id],
+    }),
+    lens: many(lenses),
+}))
 
 export const profileQuestion = pgTable('profile_question', {
     id: bigint({ mode: 'bigint' }).primaryKey(),

@@ -131,6 +131,11 @@ CREATE TABLE "service_lens_lens" (
 	"deleted_at" timestamp
 );
 --> statement-breakpoint
+CREATE TABLE "service_lens_profile_lens" (
+	"profileId" uuid NOT NULL,
+	"lensId" uuid NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE "service_lens_profile_question" (
 	"id" bigint PRIMARY KEY NOT NULL,
 	"question" varchar(1024) NOT NULL,
@@ -191,9 +196,11 @@ ALTER TABLE "service_lens_team" ADD CONSTRAINT "service_lens_team_organization_i
 ALTER TABLE "service_lens_team_member" ADD CONSTRAINT "service_lens_team_member_team_id_service_lens_team_id_fk" FOREIGN KEY ("team_id") REFERENCES "public"."service_lens_team"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "service_lens_team_member" ADD CONSTRAINT "service_lens_team_member_user_id_service_lens_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."service_lens_user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "service_lens_design_tag" ADD CONSTRAINT "service_lens_design_tag_designId_service_lens_design_id_fk" FOREIGN KEY ("designId") REFERENCES "public"."service_lens_design"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "service_lens_design_tag" ADD CONSTRAINT "service_lens_design_tag_tagId_service_lens_tag_id_fk" FOREIGN KEY ("tagId") REFERENCES "public"."service_lens_tag"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "service_lens_design_tag" ADD CONSTRAINT "service_lens_design_tag_tagId_service_lens_tag_id_fk" FOREIGN KEY ("tagId") REFERENCES "public"."service_lens_tag"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "service_lens_environment_tag" ADD CONSTRAINT "service_lens_environment_tag_environmentId_service_lens_environment_id_fk" FOREIGN KEY ("environmentId") REFERENCES "public"."service_lens_environment"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "service_lens_environment_tag" ADD CONSTRAINT "service_lens_environment_tag_tagId_service_lens_tag_id_fk" FOREIGN KEY ("tagId") REFERENCES "public"."service_lens_tag"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "service_lens_profile_lens" ADD CONSTRAINT "service_lens_profile_lens_profileId_service_lens_profile_id_fk" FOREIGN KEY ("profileId") REFERENCES "public"."service_lens_profile"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "service_lens_profile_lens" ADD CONSTRAINT "service_lens_profile_lens_lensId_service_lens_lens_id_fk" FOREIGN KEY ("lensId") REFERENCES "public"."service_lens_lens"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "service_lens_profile_question_answer" ADD CONSTRAINT "service_lens_profile_question_answer_profileQuestionId_service_lens_profile_question_id_fk" FOREIGN KEY ("profileQuestionId") REFERENCES "public"."service_lens_profile_question"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "service_lens_workload_tag" ADD CONSTRAINT "service_lens_workload_tag_workloadId_service_lens_workload_id_fk" FOREIGN KEY ("workloadId") REFERENCES "public"."service_lens_workload"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "service_lens_workload_tag" ADD CONSTRAINT "service_lens_workload_tag_tagId_service_lens_tag_id_fk" FOREIGN KEY ("tagId") REFERENCES "public"."service_lens_tag"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
