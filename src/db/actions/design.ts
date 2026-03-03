@@ -1,6 +1,6 @@
 'use server'
 
-import { deleteDesignById } from '@/db/services/designs'
+import { deleteDesign } from '@/db/queries/designs'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import { TDeleteDesignAction, deleteDesignSchema } from './schema'
@@ -8,7 +8,7 @@ import { TDeleteDesignAction, deleteDesignSchema } from './schema'
 export const deleteAction: TDeleteDesignAction = async (_, data) => {
     try {
         const parsedData = deleteDesignSchema.parse(Object.fromEntries(data.entries()))
-        await deleteDesignById({ id: parsedData.id })
+        await deleteDesign({ id: parsedData.id })
         revalidatePath('/designs', 'page')
     } catch (err) {
         console.error(err)

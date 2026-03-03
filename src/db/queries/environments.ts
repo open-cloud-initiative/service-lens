@@ -41,6 +41,11 @@ export async function getEnvironments(input: getEnvironmentsSchema) {
     }
 }
 
+export const findEnvironmentById = async (id: string) => {
+    const result = await db.select().from(environments).where(eq(environments.id, id))
+    return takeFirstOrNull(result)
+}
+
 export const insertEnvironment = async (input: TEnvironmentInsertSchema) => {
     const parsed = await environmentInsertSchema.parseAsync(input)
     const result = await db.insert(environments).values(parsed).returning()

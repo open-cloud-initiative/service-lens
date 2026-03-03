@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
-import { findEnvironmentById } from '@/db/services/environments'
+import { findEnvironmentById } from '@/db/queries/environments'
 import { notFound } from 'next/navigation'
 import { Breadcrumbs } from '../_components/breadcrumbs'
 
@@ -11,7 +11,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
         notFound()
     }
 
-    const environment = await findEnvironmentById({ id })
+    const environment = await findEnvironmentById(id)
 
     if (!environment) {
         return notFound()
