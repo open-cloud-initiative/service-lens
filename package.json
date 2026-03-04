@@ -113,7 +113,7 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^5.5.4",
     "globals": "^17.4.0",
-    "graphql": "^16.13.0",
+    "graphql": "^16.13.1",
     "graphql-yoga": "^5.18.0",
     "lint-staged": "^16.2.7",
     "nodemon": "^3.1.14",
