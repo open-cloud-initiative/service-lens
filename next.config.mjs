@@ -2,6 +2,7 @@
 const nextConfig = {
   reactCompiler: true,
   serverExternalPackages: ["pg"],
+  output: "standalone",
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },  
