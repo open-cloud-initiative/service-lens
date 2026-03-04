@@ -13,6 +13,8 @@
     "generate": "npm run generate:graphql",
     "generate:presets": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' src/scripts/generate-theme-presets.ts",
     "generate:graphql": "graphql-codegen --config ./codegen.ts",
+    "prelaunch": "docker compose up -d",
+    "postdebug": "docker compose down",
     "db:generate": "dotenv drizzle-kit generate",
     "db:introspect": "dotenv drizzle-kit introspect",
     "db:push": "dotenv drizzle-kit push",
