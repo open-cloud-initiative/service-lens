@@ -54,3 +54,13 @@ jobs:
           subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
+      
+      - uses: azure/setup-helm@v4
+      - run: npm run build:helm
+
+      - uses: helm/chart-releaser-action@v1.7.0
+        with:
+          charts_dir: helm/charts
+          config: helm/cr.yaml
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
