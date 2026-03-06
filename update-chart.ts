@@ -3,7 +3,7 @@ import * as path from 'path';
 
 // Define paths
 const packageJsonPath = path.join(__dirname, 'package.json');
-const chartYamlPath = path.join(__dirname, 'helm/service-lens/', 'Chart.yaml');
+const chartYamlPath = path.join(__dirname, 'helm/charts/service-lens/', 'Chart.yaml');
 
 interface PackageJson {
     name: string;
