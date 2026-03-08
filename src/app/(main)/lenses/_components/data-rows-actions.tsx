@@ -10,10 +10,10 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Input } from '@/components/ui/input'
 import { Row } from '@tanstack/react-table'
-import { EllipsisVertical, Trash2Icon } from 'lucide-react'
+import { EllipsisVertical } from 'lucide-react'
 import Form from 'next/form'
 import { useActionState } from 'react'
-import { deleteEnvironmentAction } from './data-rows-actions.action'
+import { deleteLensAction } from './data-rows-actions.action'
 
 interface DataTableRowActionsProps<TData> {
     row: Row<TData>
@@ -21,7 +21,7 @@ interface DataTableRowActionsProps<TData> {
 
 export function DataTableRowActions<TDesign>({ row }: DataTableRowActionsProps<TDesign>) {
     const { id } = row
-    const [state, formAction, pending] = useActionState(deleteEnvironmentAction, null)
+    const [state, formAction, pending] = useActionState(deleteLensAction, null)
 
     return (
         <DropdownMenu>
@@ -43,8 +43,7 @@ export function DataTableRowActions<TDesign>({ row }: DataTableRowActionsProps<T
                 <DropdownMenuItem variant="destructive">
                     <Form action={formAction}>
                         <Input id="id" name="id" value={row.id} hidden readOnly />
-                        <Button type="submit" disabled={pending}>
-                            <Trash2Icon />
+                        <Button type="submit" disabled={pending} variant="ghost" size="sm" className="w-full">
                             Trash
                         </Button>
                     </Form>

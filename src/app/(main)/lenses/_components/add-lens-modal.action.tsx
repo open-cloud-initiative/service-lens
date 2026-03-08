@@ -10,7 +10,6 @@ import { AddLensModalFormState } from './add-lens-modal.schema'
 
 export async function createLensAction(_: AddLensModalFormState, data: FormData) {
     const values = {
-        name: data.get('name') as string,
         spec: data.get('spec') as File,
     }
 
@@ -18,10 +17,17 @@ export async function createLensAction(_: AddLensModalFormState, data: FormData)
     const json = new TextDecoder().decode(buffer)
     const spec = lensSpecSchema.safeParse(JSON.parse(json))
 
-    const result = lensInsertSchema.safeParse({raw: spec.data, name: spec.data?.name})
+    const result = lensInsertSchema.safeParse({
+        raw: spec.data,
+        name: spec.data?.name,
+        version: spec.data?.version,
+        description: spec.data?.description,
+    })
 
     if (!result.success) {
         const errors = z.treeifyError(result.error)
+
+        console.error('Validation errors:', errors.properties?.version?.errors)
 
         return {
             values,

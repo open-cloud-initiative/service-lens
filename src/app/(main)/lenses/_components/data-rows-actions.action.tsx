@@ -1,18 +1,18 @@
 'use server'
 
-import { deleteEnvironment } from '@/db/queries/environments'
-import { environmentDeleteSchema } from '@/db/schema'
+import { deleteLens } from '@/db/queries/lenses'
+import { lensDeleteSchema } from '@/db/schema'
 import { revalidatePath } from 'next/cache'
 import 'server-only'
 import { z } from 'zod'
-import { DeleteEnvironmentSchema } from './data-rows-actions.schema'
+import { DeleteLensSchema } from './data-rows-actions.schema'
 
-export async function deleteEnvironmentAction(_: DeleteEnvironmentSchema, data: FormData) {
+export async function deleteLensAction(_: DeleteLensSchema, data: FormData) {
     const values = {
         id: data.get('id') as string,
     }
 
-    const result = environmentDeleteSchema.safeParse(values)
+    const result = lensDeleteSchema.safeParse(values)
 
     if (!result.success) {
         const errors = z.treeifyError(result.error)
@@ -25,14 +25,14 @@ export async function deleteEnvironmentAction(_: DeleteEnvironmentSchema, data: 
     }
 
     try {
-        await deleteEnvironment(result.data)
+        await deleteLens(result.data)
     } catch (error) {
         return {
             success: false,
         }
     }
 
-    revalidatePath('/environments')
+    revalidatePath('/lenses')
 
     return {
         success: true,

@@ -1,10 +1,12 @@
 import { pgTable } from '@/db/utils'
-import { json, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
+import { integer, json, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 
 export const lenses = pgTable('lens', {
     id: uuid().primaryKey().defaultRandom(),
     name: varchar({ length: 255 }).notNull(),
+    version: integer().notNull(),
+    description: varchar({ length: 1024 }),
     raw: json('raw').notNull().$type<Record<string, any>>(),
     createdAt: timestamp('created_at').defaultNow(),
     updatedAt: timestamp('updated_at')
@@ -18,8 +20,11 @@ export type TNewLens = typeof lenses.$inferInsert
 
 export const lensInsertSchema = createInsertSchema(lenses, {
     name: (schema) => schema.min(1, 'Name is required').max(255, 'Name must be at most 255 characters'),
+    version: (schema) => schema.int().min(1, 'Version must be a positive integer'),
+    description: (schema) => schema.max(1024, 'Description must be at most 1024 characters').optional(),
 }).pick({
     name: true,
+    version: true,
     raw: true,
 })
 
