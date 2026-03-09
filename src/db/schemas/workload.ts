@@ -49,6 +49,8 @@ export const workloadTag = pgTable('workload_tag', {
 
 export const workloadRelations = relations(workloads, ({ many }) => ({
     tags: many(tags),
+    profiles: many(profiles),
+    lenses: many(lenses),
 }))
 
 export const workloadInsertSchema = createInsertSchema(workloads, {
