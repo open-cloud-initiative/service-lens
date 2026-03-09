@@ -2,6 +2,7 @@ import { pgTable } from '@/db/utils'
 import { relations } from 'drizzle-orm'
 import { bigint, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
+import { environments } from './environment'
 import { lenses } from './lens'
 import { profiles } from './profile'
 import { tags } from './tag'
@@ -38,6 +39,15 @@ export const workloadProfile = pgTable('workload_profile', {
         .references(() => profiles.id),
 })
 
+export const workloadEnvironment = pgTable('workload_environment', {
+    workloadId: uuid()
+        .notNull()
+        .references(() => workloads.id, { onDelete: 'cascade' }),
+    environmentId: uuid()
+        .notNull()
+        .references(() => environments.id),
+})
+
 export const workloadTag = pgTable('workload_tag', {
     workloadId: uuid()
         .notNull()
@@ -51,6 +61,7 @@ export const workloadRelations = relations(workloads, ({ many }) => ({
     tags: many(tags),
     profiles: many(profiles),
     lenses: many(lenses),
+    environments: many(environments),
 }))
 
 export const workloadInsertSchema = createInsertSchema(workloads, {
