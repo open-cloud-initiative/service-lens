@@ -43,7 +43,7 @@ jobs:
         env:
           TAG_NAME: ${{ github.event.release.tag_name }}
       - id: push
-        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+        uses: docker/build-push-action@d08e5c354a6adb9ed34480a06d141179aa583294
         with:
           context: .
           push: true
