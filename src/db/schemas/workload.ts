@@ -2,6 +2,8 @@ import { pgTable } from '@/db/utils'
 import { relations } from 'drizzle-orm'
 import { bigint, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
+import { lenses } from './lens'
+import { profiles } from './profile'
 import { tags } from './tag'
 
 export const workloads = pgTable('workload', {
@@ -17,6 +19,24 @@ export const workloads = pgTable('workload', {
 
 export type TWorkload = typeof workloads.$inferSelect
 export type TNewWorkload = typeof workloads.$inferInsert
+
+export const workloadLens = pgTable('workload_lens', {
+    workloadId: uuid()
+        .notNull()
+        .references(() => workloads.id, { onDelete: 'cascade' }),
+    lensId: uuid()
+        .notNull()
+        .references(() => lenses.id),
+})
+
+export const workloadProfile = pgTable('workload_profile', {
+    workloadId: uuid()
+        .notNull()
+        .references(() => workloads.id, { onDelete: 'cascade' }),
+    profileId: uuid()
+        .notNull()
+        .references(() => profiles.id),
+})
 
 export const workloadTag = pgTable('workload_tag', {
     workloadId: uuid()
